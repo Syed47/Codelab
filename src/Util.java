@@ -10,6 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class Util {
 
@@ -25,6 +28,10 @@ public class Util {
 
     public static void DEBUG(Object o) {
         System.out.println(String.valueOf(o));
+    }
+
+    public static boolean checkRegex(String regex, String text) {
+        return Pattern.compile(regex).matcher(text).find();
     }
 
     public static String readlines(String path) {
@@ -61,12 +68,12 @@ public class Util {
         try {
             writer = new BufferedWriter(new OutputStreamWriter(out));
             writer.write(data);
-            DEBUG("data dispatched to destination");
         } catch (IOException e) {
             ERROR(e.getMessage());
         } finally {
             try {
                 writer.close();
+                DEBUG("data write successful");
             } catch (IOException e) {
                 ERROR(e.getMessage());
             }
@@ -74,15 +81,15 @@ public class Util {
     }
 
     public static String[] getFileNames(String path) {
-        return getFileNames(path, ".java");
+        return getFileNames(path, "");
     }
 
     public static String[] getFilePaths(String path) {
-        return getFilePaths(path, ".java");
+        return getFilePaths(path, "");
     }
 
     public static File[] filesInDir(String path) {
-        return filesInDir(path, ".java");
+        return filesInDir(path, "");
     }
 
     public static String[] getFileNames(String path, String filter) {
@@ -114,6 +121,12 @@ public class Util {
             }
         }
         return files.toArray(new File[0]); // don't ask why String[0], trust the code
+    }
+
+    public static String fileTitle(String fileName) {
+        return (fileName.contains(".") ? 
+                fileName.substring(0, fileName.indexOf(".")) : 
+                fileName);
     }
 
     public static boolean isValidPath(String path) {
