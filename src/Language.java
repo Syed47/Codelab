@@ -17,6 +17,6 @@ public abstract class Language {
 
 }
 
-class Java extends Language { Java() { super("javac", "java", ".java"); } }
 class C extends Language { C() { super("gcc", "./", ".c"); } }
+class Java extends Language { Java() { super("javac", "java", ".java"); } }
 class Python3 extends Language { Python3() { super(null, "python3", ".py"); } }

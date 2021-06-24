@@ -1,13 +1,18 @@
 import java.util.Map;
 
-public class JavaRunner extends Runner {
-
-    public JavaRunner(Code codefiles, String mainfile) {
-        super(new Java(), codefiles, mainfile, mainfile);
+public class CRunner extends Runner {
+    
+    public CRunner(Code codefiles, String mainfile, String runfile) {
+        super(new C(), codefiles, mainfile, runfile);
     }
 
-    public JavaRunner(Code codefiles) {
-        super(new Java(), codefiles, null, null);
+    public CRunner(Code codefiles, String runfile) {
+        super(new C(), codefiles, null, runfile);
+        this.setMainFile(this.getMainFile());
+    }
+
+    public CRunner(Code codefiles) {
+        super(new C(), codefiles, null, "a.out");
         this.setMainFile(this.getMainFile());
     }
     
@@ -21,8 +26,8 @@ public class JavaRunner extends Runner {
         String runner = this.language.getRunner();
         String extension = this.language.getExtension();
 
-        String compileFmt = "%s \\${prog1}%s  &> grepLines.out\n";
-        String runFmt = "%s \\${prog1}\n";
+        String compileFmt = "%s \\${prog1}%s -o %s &> grepLines.out\n";
+        String runFmt = "%s\\${run1}\n";
 
         StringBuilder script = new StringBuilder();
         script.append("# +++++++++++++++++++++++++++++++++\n");
@@ -32,7 +37,8 @@ public class JavaRunner extends Runner {
         script.append("EXIT_CODE=-1\n");
         script.append("FAILED=false\n");
         script.append(String.format("prog1=%s\n", this.mainfile));
-        script.append(String.format(compileFmt, compiler, extension));
+        script.append(String.format("run1=%s\n", this.runfile));
+        script.append(String.format(compileFmt, compiler, extension, this.runfile));
         script.append("EXIT_CODE=\\$?\n");
         script.append("if ((\\$EXIT_CODE > 0));then\n");
         script.append("    FAILED=true\n");
@@ -87,8 +93,8 @@ public class JavaRunner extends Runner {
     @Override
     public String getMainFile() {
         String regex = ""+
-            ".*public\\s+static\\s+void\\s+main\\s*"+
-            "\\(\\s*String(\\s*\\[\\]\\s+\\w+|\\s+\\w+\\[\\]).*\\{.*";
+            ".*int\\s+main\\s*"+
+            "\\(\\s*(\\s*int\\s+\\w*\\s*\\,\\s*char\\s*(\\*\\s*\\*\\s*|\\*\\s*\\[\\s*\\]\\s+)\\w+\\s*|\\s*)\\)\\s*\\{.*";
 
         for (Map.Entry<String, String> pair : this.codefiles.getFileTree().entrySet()) {
             if (Util.checkRegex(regex, pair.getValue())) {
