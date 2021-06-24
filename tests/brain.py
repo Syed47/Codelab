@@ -1,4 +1,0 @@
-
-
-class Brain:
-	pass

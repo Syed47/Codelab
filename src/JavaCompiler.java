@@ -2,7 +2,14 @@
 public class JavaCompiler extends Compiler {
 
     public JavaCompiler(Code codefiles) {
-        super(new Java(), codefiles);
+        super(new Java(), codefiles, null, null);
+        String mainfile = this.locateMainFile();
+        this.setMainFile(mainfile);
+        this.setOutFile(mainfile);
+    }
+
+    public JavaCompiler(Code codefiles, String mainfile) {
+        super(new Java(), codefiles, mainfile, mainfile);
     }
 
     @Override
@@ -64,22 +71,5 @@ public class JavaCompiler extends Compiler {
         script.append("chmod +x vpl_execution\n");
         script.append("# +++++++++++++++++++++++++++++++++");
         return script.toString();
-    }
-
-    @Override
-    public void writeScript() {
-        Util.writeToFile(
-            String.format(
-                "%s%s", 
-                this.codefiles.getBasePath(), 
-                "vpl_compile.sh"
-            ), 
-            this.scriptify()
-        );
-    }
-
-    @Override
-    public Language getLanguage() {
-        return this.language;
     }
 }

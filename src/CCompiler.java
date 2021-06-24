@@ -1,16 +1,16 @@
 
 public class CCompiler extends Compiler {
 
-    private String runfile;
-
     public CCompiler(Code codefiles) {
-        super(new C(), codefiles);
-        this.runfile = "a.out";
+        this(codefiles, "a.out");
     }
 
-    public CCompiler(Code codefiles, String runfile) {
-        super(new C(), codefiles);
-        this.runfile = runfile;
+    public CCompiler(Code codefiles, String outfile) {
+        super(new C(), codefiles, outfile);
+    }
+
+    public CCompiler(Code codefiles, String mainfile, String outfile) {
+        super(new C(), codefiles, mainfile, outfile);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class CCompiler extends Compiler {
             Util.ERROR("Cannnot compile 0 files");
             return null;
         }
-        String[] titles = this.codefiles.getFileTitles();
+
         StringBuilder script = new StringBuilder();
         script.append("# +++++++++++++++++++++++++++++++++\n");
         script.append("#! /bin/bash\n");
@@ -29,20 +29,22 @@ public class CCompiler extends Compiler {
         script.append("EXIT_CODE=-1\n");
         script.append("FAILED=false\n");
 
-        script.append(String.format("prog1=%s\n", titles[0]));
+        script.append(String.format("prog1=%s\n", this.mainfile));
 
         script.append(
             String.format(
                 "%s \\${prog1}%s -o %s &> grepLines.out\n", 
                 this.language.getCompiler(),
                 this.language.getExtension(),
-                this.runfile
+                this.outfile
             )
         );
         script.append("EXIT_CODE=\\$?\n");
         script.append("if ((\\$EXIT_CODE > 0));then\n");
         script.append("    FAILED=true\n");
-        script.append(String.format("    echo \"%s failed to compile\"\n", titles[0]));
+        script.append(
+            String.format("    echo \"%s failed to compile\"\n", this.mainfile)
+        );
         script.append("fi\n");
 
         script.append("if [ \\$FAILED = true ]; then\n");
@@ -56,27 +58,6 @@ public class CCompiler extends Compiler {
         script.append("EEOOFF\n");
         script.append("chmod +x vpl_execution\n");
         script.append("# +++++++++++++++++++++++++++++++++");
-        return script.toString();    }
-
-    @Override
-    public void writeScript() {
-        Util.writeToFile(
-            String.format(
-                "%s%s", 
-                this.codefiles.getBasePath(), 
-                "vpl_compile.sh"
-            ), 
-            this.scriptify()
-        );
+        return script.toString();
     }
-
-    @Override
-    public Language getLanguage() {
-        return this.language;
-    }
-    
-    public String getRunFile() {
-        return this.runfile;
-    }
-
 }
