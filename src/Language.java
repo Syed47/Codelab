@@ -50,7 +50,7 @@ class Python3 extends Language {
             null, 
             "python3", 
             ".py",
-            ".*if\\s+__name__\\s+==\\s+\"main\"\\:"
+            ".*if\\s+__name__\\s+==\\s+\"__main__\"\\:.*"
         ); 
     }
 }

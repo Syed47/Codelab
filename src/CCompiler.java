@@ -1,16 +1,12 @@
 
 public class CCompiler extends Compiler {
 
-    public CCompiler(Code codefiles) {
+    public CCompiler(CCode codefiles) {
         this(codefiles, "a.out");
     }
 
-    public CCompiler(Code codefiles, String outfile) {
+    public CCompiler(CCode codefiles, String outfile) {
         super(codefiles, outfile);
-    }
-
-    public CCompiler(Code codefiles, String mainfile, String outfile) {
-        super(codefiles, mainfile, outfile);
     }
 
     @Override

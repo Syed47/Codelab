@@ -3,8 +3,8 @@ public class PythonRunner extends Runner {
     // DUMMY COMPILER [PYTHON DOES NOT NEED A COMPILER]
     // this stays static so we can use it inside this class (error otherwise)
     private static class PythonCompiler extends Compiler {
-        public PythonCompiler(Code codefiles) {
-            super(codefiles, null, null);
+        public PythonCompiler(PythonCode codefiles) {
+            super(codefiles, null);
             this.writeScript();
         }
 
@@ -22,8 +22,14 @@ public class PythonRunner extends Runner {
             return script.toString();
         }
     }
+    
+    PythonRunner(PythonCode codefiles) {
+        this(codefiles, null);
+        this.setRunFile(this.compiler.getMainFile());
+    }
 
-    PythonRunner(Code codefiles, String runfile) {
+
+    PythonRunner(PythonCode codefiles, String runfile) {
         super(new PythonCompiler(codefiles));
         this.setRunFile(runfile);
     }

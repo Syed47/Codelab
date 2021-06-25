@@ -1,4 +1,3 @@
-import java.util.Map;
 
 public abstract class Compiler {
 
@@ -9,25 +8,7 @@ public abstract class Compiler {
     protected Compiler(Code codefiles, String outfile) {
         this.codefiles = codefiles;
         this.setOutFile(outfile);
-        this.setMainFile(this.locateMainFile());
-    }
-    protected Compiler(Code codefiles, String mainfile, String outfile) {
-        this.codefiles = codefiles;
-        this.setMainFile(mainfile);
-        this.setOutFile(outfile);
-    }
-
-    protected String locateMainFile() {
-        String regex = this.getLanguage().getMainRegex();
-        for (Map.Entry<String, String> pair : this.codefiles.getFileTree().entrySet()) {
-            if (Util.checkRegex(regex, pair.getValue())) {
-                String name = pair.getKey();
-                Util.DEBUG("MAIN FILE = " + name);
-                return name.substring(0, name.indexOf("."));
-            }
-        }
-        Util.ERROR("NO file with main method found");
-        return null;
+        this.setMainFile(this.codefiles.getMainFile());
     }
 
     protected void writeScript() {

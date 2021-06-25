@@ -1,15 +1,9 @@
 
 public class JavaCompiler extends Compiler {
 
-    public JavaCompiler(Code codefiles) {
-        super(codefiles, null, null);
-        String mainfile = this.locateMainFile();
-        this.setMainFile(mainfile);
+    public JavaCompiler(JavaCode codefiles) {
+        super(codefiles, null);
         this.setOutFile(mainfile);
-    }
-
-    public JavaCompiler(Code codefiles, String mainfile) {
-        super(codefiles, mainfile, mainfile);
     }
 
     @Override
@@ -41,7 +35,7 @@ public class JavaCompiler extends Compiler {
                 )
             );
             script.append("EXIT_CODE=\\$?\n");
-            script.append("if ((\\$EXIT_CODE > 0));then\n");
+            script.append("if ((\\$EXIT_JavaCode > 0));then\n");
             script.append("    FAILED=true\n");
             script.append(String.format("    echo \"%s failed to compile\"\n", titles[0]));
             script.append("fi\n");
