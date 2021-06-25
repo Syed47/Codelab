@@ -11,9 +11,10 @@ public class CRunner extends Runner {
             Util.ERROR("Cannot run 0 files");
             return null;
         }
-        String compiler = this.compiler.language.getCompiler();
-        String runner = this.compiler.language.getRunner();
-        String extension = this.compiler.language.getExtension();
+
+        final String compiler = this.getLanguage().getCompiler();
+        final String runner = this.getLanguage().getRunner();
+        final String extension = this.getLanguage().getExtension();
 
         String compileFmt = "%s \\${prog1}%s -o %s &> grepLines.out\n";
         String runFmt = "%s\\${run1}\n";

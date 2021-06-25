@@ -6,11 +6,11 @@ public class CCompiler extends Compiler {
     }
 
     public CCompiler(Code codefiles, String outfile) {
-        super(new C(), codefiles, outfile);
+        super(codefiles, outfile);
     }
 
     public CCompiler(Code codefiles, String mainfile, String outfile) {
-        super(new C(), codefiles, mainfile, outfile);
+        super(codefiles, mainfile, outfile);
     }
 
     @Override
@@ -20,6 +20,9 @@ public class CCompiler extends Compiler {
             Util.ERROR("Cannnot compile 0 files");
             return null;
         }
+
+        final String compiler = this.getLanguage().getCompiler();
+        final String extension = this.getLanguage().getExtension();
 
         StringBuilder script = new StringBuilder();
         script.append("# +++++++++++++++++++++++++++++++++\n");
@@ -34,8 +37,8 @@ public class CCompiler extends Compiler {
         script.append(
             String.format(
                 "%s \\${prog1}%s -o %s &> grepLines.out\n", 
-                this.language.getCompiler(),
-                this.language.getExtension(),
+                compiler,
+                extension,
                 this.outfile
             )
         );

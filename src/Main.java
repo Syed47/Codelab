@@ -3,16 +3,14 @@ public class Main {
     public static void main(String[] args) {
 
         // Compling and Running Java Code
-        Code code = new Code("../tests", ".java");
-        Compiler compiler = new JavaCompiler(code);
+        Compiler compiler = new JavaCompiler(new JavaCode("../tests"), "DNA");
         Runner runner = new JavaRunner(compiler);
         compiler.writeScript();
         runner.writeScript();
 
 
         // Compling and Running C Code
-        // Code code = new Code("../tests", ".c");
-        // Compiler compiler = new CCompiler(code);
+        // Compiler compiler = new CCompiler(new CCode("../tests"));
         // Runner runner = new CRunner(compiler);
         // compiler.writeScript();
         // runner.writeScript();

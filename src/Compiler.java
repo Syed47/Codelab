@@ -3,25 +3,22 @@ import java.util.Map;
 public abstract class Compiler {
 
     protected Code codefiles;
-    protected Language language; 
     protected String mainfile;
     protected String outfile;
 
-    protected Compiler(Language language, Code codefiles, String outfile) {
-        this.language = language;
+    protected Compiler(Code codefiles, String outfile) {
         this.codefiles = codefiles;
         this.setOutFile(outfile);
         this.setMainFile(this.locateMainFile());
     }
-    protected Compiler(Language language, Code codefiles, String mainfile, String outfile) {
-        this.language = language;
+    protected Compiler(Code codefiles, String mainfile, String outfile) {
         this.codefiles = codefiles;
         this.setMainFile(mainfile);
         this.setOutFile(outfile);
     }
 
     protected String locateMainFile() {
-        String regex = this.language.getMainRegex();
+        String regex = this.getLanguage().getMainRegex();
         for (Map.Entry<String, String> pair : this.codefiles.getFileTree().entrySet()) {
             if (Util.checkRegex(regex, pair.getValue())) {
                 String name = pair.getKey();
@@ -46,7 +43,7 @@ public abstract class Compiler {
     }
 
     protected Language getLanguage() {
-        return this.language;
+        return this.codefiles.getLanguage();
     }
     
     protected String getOutFile() {

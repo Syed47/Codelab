@@ -2,14 +2,14 @@
 public class JavaCompiler extends Compiler {
 
     public JavaCompiler(Code codefiles) {
-        super(new Java(), codefiles, null, null);
+        super(codefiles, null, null);
         String mainfile = this.locateMainFile();
         this.setMainFile(mainfile);
         this.setOutFile(mainfile);
     }
 
     public JavaCompiler(Code codefiles, String mainfile) {
-        super(new Java(), codefiles, mainfile, mainfile);
+        super(codefiles, mainfile, mainfile);
     }
 
     @Override
@@ -19,6 +19,10 @@ public class JavaCompiler extends Compiler {
             Util.ERROR("Cannnot compile 0 files");
             return null;
         }
+
+        final String compiler = this.getLanguage().getCompiler();
+        final String extension = this.getLanguage().getExtension();
+
         String[] titles = this.codefiles.getFileTitles();
         StringBuilder script = new StringBuilder();
         script.append("# +++++++++++++++++++++++++++++++++\n");
@@ -32,8 +36,8 @@ public class JavaCompiler extends Compiler {
             script.append(
                 String.format(
                     "%s \\${prog1}%s  &> grepLines.out\n", 
-                    this.language.getCompiler(),
-                    this.language.getExtension()
+                    compiler,
+                    extension
                 )
             );
             script.append("EXIT_CODE=\\$?\n");
@@ -47,9 +51,9 @@ public class JavaCompiler extends Compiler {
                 script.append(
                     String.format(
                         "%s %s%s &> grepLines.out\n", 
-                        this.language.getCompiler(), 
+                        compiler, 
                         title, 
-                        this.language.getExtension()
+                        extension
                     )
                 );
                 script.append("EXIT_CODE=\\$?\n");

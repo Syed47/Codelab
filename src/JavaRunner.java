@@ -11,9 +11,9 @@ public class JavaRunner extends Runner {
             Util.ERROR("Cannot run 0 files");
             return null;
         }
-        String compiler  = this.compiler.getLanguage().getCompiler();
-        String runner    = this.compiler.getLanguage().getRunner();
-        String extension = this.compiler.getLanguage().getExtension();
+        String compiler  = this.getLanguage().getCompiler();
+        String runner    = this.getLanguage().getRunner();
+        String extension = this.getLanguage().getExtension();
 
         String compileFmt = "%s \\${prog1}%s  &> grepLines.out\n";
         String runFmt = "%s \\${prog1}\n";

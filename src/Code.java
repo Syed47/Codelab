@@ -2,16 +2,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Code {
-    
-    private final int count;
-    private final String basePath;
-    private final HashMap<String, String> files;
+class JavaCode extends Code {
+    public JavaCode(String dirpath) {
+        super(dirpath, new Java());
+    }
+}
 
-    public Code(String path, String filter) {
-        this.basePath = path.charAt(path.length()-1) == '/' ? path : (path+"/");
+class CCode extends Code {
+    public CCode(String dirpath) {
+        super(dirpath, new C());
+    }
+}
+
+
+public abstract class Code {
+    
+    protected final int count;
+    protected final String basePath;
+    protected final Language language;
+    protected final HashMap<String, String> files;
+
+    protected Code(String path, Language language) {
+        this.basePath = path.charAt(path.length()-1) == '/' ? path : path.concat("/");
+        this.language = language;
         this.files = new HashMap<>();
-        String[] fileNames = Util.getFileNames(this.basePath, filter);
+        String[] fileNames = Util.getFileNames(this.basePath, this.language.getExtension());
         for (String file : fileNames) {
             String code = Util.readlines(this.basePath+file);
             this.files.put(file, code);
@@ -19,26 +34,30 @@ public class Code {
         this.count = this.files.keySet().size();
     }
 
-    public String getBasePath() {
+    protected Language getLanguage() {
+        return this.language;
+    }
+
+    protected String getBasePath() {
         return this.basePath;
     }
     
-    public int getCount() {
+    protected int getCount() {
         return this.count;
     }
 
-    public HashMap<String, String> getFileTree() {
+    protected Map<String, String> getFileTree() {
         return this.files;
     }
 
-    public String[] getFileNames() {
+    protected String[] getFileNames() {
         Set<String> keys = files.keySet();
         String[] names = new String[keys.size()];
         System.arraycopy(keys.toArray(), 0, names, 0, keys.size());
         return names;
     }
 
-    public String[] getFilePaths() {
+    protected String[] getFilePaths() {
         String[] names = getFileNames();
         String[] filePaths = new String[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -47,7 +66,7 @@ public class Code {
         return filePaths;
     }
 
-    public String[] getFileTitles() {
+    protected String[] getFileTitles() {
         String[] names = getFileNames();
         String[] titles = new String[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -56,7 +75,7 @@ public class Code {
         return titles;
     }
 
-    public void print() {
+    protected void print() {
         for (Map.Entry<String, String> pair : this.files.entrySet()) {
             Util.ECHO(
                 String.format(
