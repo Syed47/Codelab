@@ -14,6 +14,12 @@ class CCode extends Code {
     }
 }
 
+class PythonCode extends Code {
+    public PythonCode(String dirpath) {
+        super(dirpath, new Python3());
+    }
+}
+
 
 public abstract class Code {
     

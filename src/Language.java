@@ -44,4 +44,13 @@ class C extends Language {
         ); 
     } 
 }
-// class Python3 extends Language { Python3() { super(null, "python3", ".py"); } }
+class Python3 extends Language { 
+    Python3() { 
+        super(
+            null, 
+            "python3", 
+            ".py",
+            ".*if\\s+__name__\\s+==\\s+\"main\"\\:"
+        ); 
+    }
+}

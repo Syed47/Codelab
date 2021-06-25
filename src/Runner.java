@@ -9,11 +9,6 @@ public abstract class Runner {
         this.runfile = this.compiler.getOutFile();
     }
 
-    // protected Runner(Compiler compiler, String runfile) {
-    //     this.compiler = compiler;
-    //     this.runfile = runfile;
-    // }
-
     protected void setRunFile(String runfile) {
         this.runfile = runfile;
     }

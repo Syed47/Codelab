@@ -3,10 +3,10 @@ public class Main {
     public static void main(String[] args) {
 
         // Compling and Running Java Code
-        Compiler compiler = new JavaCompiler(new JavaCode("../tests"), "DNA");
-        Runner runner = new JavaRunner(compiler);
-        compiler.writeScript();
-        runner.writeScript();
+        // Compiler compiler = new JavaCompiler(new JavaCode("../tests"));
+        // Runner runner = new JavaRunner(compiler);
+        // compiler.writeScript();
+        // runner.writeScript();
 
 
         // Compling and Running C Code
@@ -14,6 +14,10 @@ public class Main {
         // Runner runner = new CRunner(compiler);
         // compiler.writeScript();
         // runner.writeScript();
+
+        // Running Python3 Code
+        Runner runner = new PythonRunner(new PythonCode("../tests"), "app");
+        runner.writeScript();
 
     }
 }
