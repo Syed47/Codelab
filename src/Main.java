@@ -5,8 +5,19 @@ public class Main {
         // Compling and Running Java Code
         Compiler compiler = new JavaCompiler(new JavaCode("../tests"));
         Runner runner = new JavaRunner(compiler);
+        Evaluator evaluator = new JavaEvaluator(runner);
+        
+        evaluator.specifyRegex("DNA", Regex.JAVA_MAIN_METHOD, Regex.JAVA_SYSOUT);
+        evaluator.specifyRegex("Sequence", 
+            new Regex(".*public\\s+boolean\\s+compareSequence\\s*\\(.*\\).*"));
+
+        evaluator.setCompileGrade(20);
+        evaluator.setRegexGrade(30, 3);
+        evaluator.setTestGrade(60, 3);
+
         compiler.writeScript();
         runner.writeScript();
+        // evaluator.writeScript(); // not implemented yet!!
 
 
         // Compling and Running C Code
