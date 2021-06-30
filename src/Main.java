@@ -9,15 +9,15 @@ public class Main {
         
         evaluator.specifyRegex("DNA", Regex.JAVA_MAIN_METHOD, Regex.JAVA_SYSOUT);
         evaluator.specifyRegex("Sequence", 
-            new Regex(".*public\\s+boolean\\s+compareSequence\\s*\\(.*\\).*"));
+            new Regex(".*public\\s\\+boolean\\s\\+compareSequence\\s*\\(.*\\).*", "a compareSequence method"));
 
-        evaluator.setCompileGrade(20);
-        evaluator.setRegexGrade(30, 3);
-        evaluator.setTestGrade(60, 3);
+        evaluator.setCompileGrade(15);
+        evaluator.setRegexGrade(45, 3);
+        evaluator.setTestGrade(40, 1);
 
         compiler.writeScript();
         runner.writeScript();
-        // evaluator.writeScript(); // not implemented yet!!
+        evaluator.writeScript(); // not implemented yet!!
 
 
         // Compling and Running C Code

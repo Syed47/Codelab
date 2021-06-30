@@ -3,16 +3,16 @@ import java.util.HashMap;
 
 public abstract class Evaluator {
 
-    private final Code code;
-    private final HashMap<String, ArrayList<Regex>> regex;
-    private final Runner runner;
-    private Grade cmplGrade, regGrade, tcGrade;
+    protected final Code code;
+    protected final HashMap<String, ArrayList<Regex>> regex;
+    protected final Runner runner;
+    protected Grade cmplGrade, regGrade, tcGrade;
 
     protected Evaluator(Runner runner) {
         this.runner = runner;
         this.code = this.runner.getCompiler().getCode();
         this.regex = new HashMap<>();
-        for (String name : this.code.getFileTitles()) {
+        for (String name : this.getFileTitles()) {
             regex.put(name, new ArrayList<>());
         }
     }
@@ -35,6 +35,10 @@ public abstract class Evaluator {
             this.regex.get(filetitle).add(r); 
         }
         Util.ECHO("all regex added");
+    }
+
+    protected String[] getFileTitles() {
+        return this.code.getFileTitles();
     }
 
     protected void setCompileGrade(int grade) {
@@ -60,8 +64,7 @@ public abstract class Evaluator {
     protected String runfile() {
         return this.runner.getRunFile();
     }
-
-    protected void writeScript() {
+   protected void writeScript() {
         this.writeScript(this.code.getBasePath()+"vpl_evaluate.sh");
     }
 

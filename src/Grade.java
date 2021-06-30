@@ -18,6 +18,14 @@ public final class Grade {
         this.acheived += this.acheived < this.total ? this.grade : 0;
     }
 
+    protected int getCount() {
+        return this.count;
+    }
+
+    protected int getTotal() {
+        return this.total;
+    }
+
     protected int finalGrade() {
         return this.acheived;
     }
