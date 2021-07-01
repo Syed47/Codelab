@@ -7,28 +7,21 @@ public class Main {
         Runner runner = new JavaRunner(compiler);
         Evaluator evaluator = new JavaEvaluator(runner);
         
+        evaluator.setCompileGrade(10);
+        evaluator.setRegexGrade(30, 3);
+        evaluator.setTestGrade(60, 3);
+        
         evaluator.specifyRegex("DNA", Regex.JAVA_MAIN_METHOD, Regex.JAVA_SYSOUT);
         evaluator.specifyRegex("Sequence", 
             new Regex(".*public\\s\\+boolean\\s\\+compareSequence\\s*\\(.*\\).*", "a compareSequence method"));
 
-        evaluator.setCompileGrade(15);
-        evaluator.setRegexGrade(45, 3);
-        evaluator.setTestGrade(40, 1);
+        evaluator.setTestData("johndoe\njohndoe\njohnnoe\n", "No Mutation detected!\n");
+        evaluator.setTestData("syed\nabcd\nefgh\n", "Mutation detected!\n");
+        evaluator.setTestData("test\ntae0\n1est\n", "No Mutation detected!\n");
 
         compiler.writeScript();
         runner.writeScript();
-        evaluator.writeScript(); // not implemented yet!!
-
-
-        // Compling and Running C Code
-        // Compiler compiler = new CCompiler(new CCode("../tests"));
-        // Runner runner = new CRunner(compiler);
-        // compiler.writeScript();
-        // runner.writeScript();
-
-        // Running Python3 Code
-        // Runner runner = new PythonRunner(new PythonCode("../tests"));
-        // runner.writeScript();
+        evaluator.writeScript();
 
     }
 }

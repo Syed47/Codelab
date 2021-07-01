@@ -116,27 +116,32 @@ public class JavaEvaluator extends Evaluator {
         }
 
         script.append("\n# --- create test input files ---\n");
-        script.append("cat > data1.txt <<EOF\n");
-        script.append("syed\n");
-        script.append("syed\n");
-        script.append("syed\n");
-        script.append("EOF\n");
+        for (int i = 0; i < this.getTests().size(); i++) {
+            script.append(String.format("cat > data%d.txt <<EOF\n", i+1));
+            script.append(this.testIO.get(i).input);
+            script.append("EOF\n");
+        }
+
         script.append("\n");
         script.append("\n#--- create expected outputs, one for each input file above ---\n");
-        script.append("cat > data1.out <<EOF\n");
-        script.append("No Mutation detected!\n");
-        script.append("EOF\n");
+        
+        for (int i = 0; i < this.getTests().size(); i++) {
+            script.append(String.format("cat > data%d.out <<EOF\n", i+1));
+            script.append(this.testIO.get(i).output);
+            script.append("EOF\n");
+        }
+
         script.append("\n");
         script.append("count=0\n");
         script.append("if [ \\${compiled} = true ] ; then\n");
         script.append("    #---loops through the amount of test cases you specified at the top ---\n");
         script.append("    for((i=1;i<=\\$numberOfTestCases;i++))\n");
         script.append("    do\n");
-        script.append("       java \\${prog1} < data1.txt &> user.out\n");
+        script.append("       java \\${prog1} < data\\${i}.txt &> user.out\n");
         script.append("\n");
         script.append("       #--- compute difference ---\n");
         script.append("       echo \"---------------------\"\n");
-        script.append("       diff -y -w --ignore-all-space user.out data1.out > diff.out\n");
+        script.append("       diff -y -w --ignore-all-space user.out data\\${i}.out > diff.out\n");
         script.append("\n");
         script.append("       #--- reject if different ---\n");
         script.append("       if ((\\$? > 0)); then\n");

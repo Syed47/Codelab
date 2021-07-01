@@ -3,18 +3,33 @@ import java.util.HashMap;
 
 public abstract class Evaluator {
 
+    protected static class TestIO { 
+        String input, output;
+        TestIO(String in, String out) { this.input = in; this.output = out; }
+    }
+
     protected final Code code;
-    protected final HashMap<String, ArrayList<Regex>> regex;
     protected final Runner runner;
+    protected final HashMap<String, ArrayList<Regex>> regex;
     protected Grade cmplGrade, regGrade, tcGrade;
+    protected ArrayList<TestIO> testIO;
 
     protected Evaluator(Runner runner) {
         this.runner = runner;
         this.code = this.runner.getCompiler().getCode();
         this.regex = new HashMap<>();
+        this.testIO = new ArrayList<>();
         for (String name : this.getFileTitles()) {
             regex.put(name, new ArrayList<>());
         }
+    }
+
+    protected void setTestData(String input, String output) {
+        if (input == null || output == null) {
+            Util.ERROR("Test input and/or output cannot be null");
+            return;
+        }
+        this.testIO.add(new TestIO(input, output));
     }
 
     protected void specifyRegex(Regex... regexes) {
@@ -35,6 +50,12 @@ public abstract class Evaluator {
             this.regex.get(filetitle).add(r); 
         }
         Util.ECHO("all regex added");
+    }
+
+    protected ArrayList<TestIO> getTests() {
+        ArrayList<TestIO> copy = new ArrayList<>();
+        this.testIO.stream().forEach(test -> copy.add(test));
+        return copy;
     }
 
     protected String[] getFileTitles() {
@@ -75,4 +96,3 @@ public abstract class Evaluator {
     // implement for every evaluator
     protected abstract String scriptify();
 }
-
