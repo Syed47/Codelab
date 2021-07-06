@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 class JavaCode extends Code {
@@ -39,7 +40,13 @@ public abstract class Code {
 
     protected Code(String path, Language language) {
         this(language, path, null);
-        this.setMainFile(this.locateMainFile());
+        this.setMainFile(
+            (this.count == 1) ? 
+            this.files.keySet().iterator().next() : 
+            (this.count > 1) ?
+            this.locateMainFile() : 
+            null
+        );
     }
 
     protected Code(Language language, String path, String mainfile) {

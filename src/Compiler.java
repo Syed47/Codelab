@@ -7,7 +7,7 @@ public abstract class Compiler {
 
     protected Compiler(Code codefiles, String outfile) {
         this.codefiles = codefiles;
-        this.setOutFile(outfile);
+        this.outfile = outfile;
         this.setMainFile(this.codefiles.getMainFile());
     }
 

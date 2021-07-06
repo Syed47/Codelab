@@ -1,0 +1,2 @@
+Error: Could not find or load main class Minmax		      |	4:0
+Caused by: java.lang.ClassNotFoundException: Minmax	      <

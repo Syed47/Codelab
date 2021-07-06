@@ -2,6 +2,9 @@
 
 int main()
 {
-    sayHello("Syed");
+    char buffer[10] = {0};
+    scanf("%s", buffer);
+    buffer[9] = 0;
+    sayHello(buffer);
     return 0;
 }

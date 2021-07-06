@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,6 +21,7 @@ public abstract class Evaluator {
         this.regex = new HashMap<>();
         this.testIO = new ArrayList<>();
         for (String name : this.getFileTitles()) {
+            Util.DEBUG(name);
             regex.put(name, new ArrayList<>());
         }
     }
@@ -30,6 +32,13 @@ public abstract class Evaluator {
             return;
         }
         this.testIO.add(new TestIO(input, output));
+    }
+
+    protected void setTestData(File input, File output) {
+        this.setTestData(
+            Util.readlines(input.getAbsolutePath()), 
+            Util.readlines(output.getAbsolutePath())
+        );
     }
 
     protected void specifyRegex(Regex... regexes) {
