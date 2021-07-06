@@ -1,5 +1,4 @@
 
-
 public class Regex {
 
     private String regex;

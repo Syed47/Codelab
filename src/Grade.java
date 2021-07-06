@@ -1,5 +1,4 @@
 
-
 public final class Grade {
 
     private final int total;

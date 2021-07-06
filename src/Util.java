@@ -17,7 +17,7 @@ public class Util {
     private Util() {} // to hide default public constructor
 
     public static void ECHO(Object o) {
-        DEBUG(o);
+        System.out.println(String.valueOf(o));
     }
 
     public static void ERROR(String err) {
@@ -25,7 +25,7 @@ public class Util {
     }
 
     public static void DEBUG(Object o) {
-        System.out.println(String.valueOf(o));
+        ECHO(o);
     }
 
     public static boolean checkRegex(String regex, String text) {

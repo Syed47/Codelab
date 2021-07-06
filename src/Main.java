@@ -2,16 +2,15 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-
-        Test.java();
-        // Test.c();
-        // Test.python();
+        Test.JAVA("../tests");
+        // Test.C("../tests");
+        // Test.PYTHON3("../tests");
 
     }
 
     private static class Test {
-        static void java() {
-            Code labcode = new JavaCode("../tests");
+        static void JAVA(String path) {
+            Code labcode = new JavaCode(path);
             Compiler compiler = new JavaCompiler((JavaCode)labcode);
             Runner runner = new JavaRunner(compiler);
             Evaluator evaluator = new JavaEvaluator(runner);
@@ -57,9 +56,9 @@ public class Main {
         }
     
         // Compling, Running and Evaluating C Code
-        static void c() {
-            Code code = new CCode("../tests");
-            Compiler compiler = new CCompiler((CCode)code);
+        static void C(String path) {
+            Code code = new CCode(path);
+            Compiler compiler = new CCompiler((CCode)code, "run");
             Runner runner = new CRunner(compiler);
             CEvaluator evaluator = new CEvaluator(runner);
     
@@ -86,8 +85,8 @@ public class Main {
         } 
     
         // Running and Evaluating Python3 Code
-        static void python() {
-            PythonCode code = new PythonCode("../tests");
+        static void PYTHON3(String path) {
+            PythonCode code = new PythonCode(path);
             Runner runner = new PythonRunner(code, "app");
             PythonEvaluator evaluator = new PythonEvaluator(runner);
     

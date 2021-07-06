@@ -1,10 +1,9 @@
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 class JavaCode extends Code {
     public JavaCode(String dirpath) {
-        super(dirpath, new Java());
+        super(new Java(), dirpath);
     }
     public JavaCode(String dirpath, String mainfile) {
         super(new Java(), dirpath, mainfile);
@@ -13,7 +12,7 @@ class JavaCode extends Code {
 
 class CCode extends Code {
     public CCode(String dirpath) {
-        super(dirpath, new C());
+        super(new C(), dirpath);
     }
     public CCode(String dirpath, String mainfile) {
         super(new C(), dirpath, mainfile);
@@ -22,7 +21,7 @@ class CCode extends Code {
 
 class PythonCode extends Code {
     public PythonCode(String dirpath) {
-        super(dirpath, new Python3());
+        super(new Python3(), dirpath);
     }
     public PythonCode(String dirpath, String mainfile) {
         super(new Python3(), dirpath, mainfile);
@@ -38,7 +37,7 @@ public abstract class Code {
     protected final HashMap<String, String> files;
     protected String mainfile;
 
-    protected Code(String path, Language language) {
+    protected Code( Language language, String path) {
         this(language, path, null);
         this.setMainFile(
             (this.count == 1) ? 

@@ -85,7 +85,7 @@ public class CEvaluator extends Evaluator {
         script.append("testCase=testCasesGrade/numberOfTestCases\n");
 
         script.append("\n# ----------------- COMPILE STUDENT PROG  ----------------\n");
-        script.append(String.format("%s %s%s", compiler, this.mainfile(), extension));
+        script.append(String.format("%s %s%s -o %s", compiler, this.mainfile(), extension, this.runfile()));
         script.append(" &> grepLines.out\n");
 
         script.append("\n");
