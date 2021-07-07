@@ -1,21 +1,18 @@
+package core;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Evaluator {
+public abstract class CodeEvaluator {
 
-    protected static class TestIO { 
-        String input, output;
-        TestIO(String in, String out) { this.input = in; this.output = out; }
-    }
+    private final Code code;
+    private final CodeRunner runner;
+    private final HashMap<String, ArrayList<Regex>> regex;
+    private Grade cmplGrade, regGrade, tcGrade;
+    private ArrayList<TestIO> testIO;
 
-    protected final Code code;
-    protected final Runner runner;
-    protected final HashMap<String, ArrayList<Regex>> regex;
-    protected Grade cmplGrade, regGrade, tcGrade;
-    protected ArrayList<TestIO> testIO;
-
-    protected Evaluator(Runner runner) {
+    public CodeEvaluator(CodeRunner runner) {
         this.runner = runner;
         this.code = this.runner.getCompiler().getCode();
         this.regex = new HashMap<>();
@@ -26,7 +23,7 @@ public abstract class Evaluator {
         }
     }
 
-    protected void setTestData(String input, String output) {
+    public void setTestData(String input, String output) {
         if (input == null || output == null) {
             Util.ERROR("Test input and/or output cannot be null");
             return;
@@ -34,20 +31,20 @@ public abstract class Evaluator {
         this.testIO.add(new TestIO(input, output));
     }
 
-    protected void setTestData(File input, File output) {
+    public void setTestData(File input, File output) {
         this.setTestData(
             Util.readlines(input.getAbsolutePath()), 
             Util.readlines(output.getAbsolutePath())
         );
     }
 
-    protected void specifyRegex(Regex... regexes) {
+    public void specifyRegex(Regex... regexes) {
         if (this.getCode().getCount() > 0) {
             this.specifyRegex(this.code.getMainFile(), regexes);
         }
     }
     
-    protected void specifyRegex(String filetitle, Regex... regexes) {
+    public void specifyRegex(String filetitle, Regex... regexes) {
         if (filetitle.endsWith(this.code.getLanguage().getExtension())) {
             filetitle = Util.fileTitle(filetitle);
         }
@@ -61,44 +58,65 @@ public abstract class Evaluator {
         Util.ECHO("all regex added");
     }
 
-    protected ArrayList<TestIO> getTests() {
+    public ArrayList<TestIO> getTests() {
         ArrayList<TestIO> copy = new ArrayList<>();
         this.testIO.stream().forEach(test -> copy.add(test));
         return copy;
     }
 
-    protected String[] getFileTitles() {
+    public String[] getFileTitles() {
         return this.code.getFileTitles();
     }
 
-    protected void setCompileGrade(int grade) {
+    public void setCompileGrade(int grade) {
         this.cmplGrade = new Grade(grade, 1);
     }
 
-    protected void setRegexGrade(int total, int count) {
+    public void setRegexGrade(int total, int count) {
         this.regGrade = new Grade(total, count);
     }
 
-    protected void setTestGrade(int total, int count) {
+    public void setTestGrade(int total, int count) {
         this.tcGrade = new Grade(total, count);
     }
 
-    protected Code getCode() {
+    public Code getCode() {
         return this.code;
     }
 
-    protected String mainfile() {
+    public ArrayList<TestIO> getTestIOs() {
+        return this.testIO;
+    }
+
+    public HashMap<String, ArrayList<Regex>> getRegex() {
+        return this.regex;
+    }
+
+    public Grade getCmplGrade() {
+        return this.cmplGrade;
+    }
+
+    public Grade getRegGrade() {
+        return this.regGrade;
+    }
+
+    public Grade getTcGrade() {
+        return this.tcGrade;
+    }
+
+    public String mainfile() {
         return this.code.getMainFile();
     }
 
-    protected String runfile() {
+    public String runfile() {
         return this.runner.getRunFile();
     }
-   protected void writeScript() {
+   
+    public void writeScript() {
         this.writeScript(this.code.getBasePath()+"vpl_evaluate.sh");
     }
 
-    protected void writeScript(String to) {
+    public void writeScript(String to) {
         Util.writeToFile(to, this.scriptify());
     }
 

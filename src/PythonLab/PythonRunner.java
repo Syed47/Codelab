@@ -1,8 +1,13 @@
+package PythonLab;
 
-public class PythonRunner extends Runner {
+import core.Util;
+import core.CodeRunner;
+import core.CodeCompiler;
+
+public class PythonRunner extends CodeRunner {
     // DUMMY COMPILER [PYTHON DOES NOT NEED A COMPILER]
     // this stays static so we can use it inside this class (error otherwise)
-    private static class PythonCompiler extends Compiler {
+    private static class PythonCompiler extends CodeCompiler {
         public PythonCompiler(PythonCode codefiles) {
             super(codefiles, null);
             this.writeScript();
@@ -23,20 +28,20 @@ public class PythonRunner extends Runner {
         }
     }
     
-    PythonRunner(PythonCode codefiles) {
+    public PythonRunner(PythonCode codefiles) {
         this(codefiles, null);
-        this.setRunFile(this.compiler.getMainFile());
+        this.setRunFile(this.getCompiler().getMainFile());
     }
 
 
-    PythonRunner(PythonCode codefiles, String runfile) {
+    public PythonRunner(PythonCode codefiles, String runfile) {
         super(new PythonCompiler(codefiles));
         this.setRunFile(runfile);
     }
 
     @Override
     protected String scriptify() {
-        if (this.compiler.getCode().getCount() == 0) {
+        if (this.getCompiler().getCode().getCount() == 0) {
             Util.ERROR("Cannot run 0 files");
             return null;
         }
@@ -52,7 +57,7 @@ public class PythonRunner extends Runner {
         script.append("#! /bin/bash\n");
         script.append("EXIT_CODE=-1\n");
         script.append("FAILED=false\n");
-        script.append(String.format("prog1=%s\n", this.runfile));
+        script.append(String.format("prog1=%s\n", this.getRunFile()));
         script.append(String.format(runFmt, runner, extension));
         script.append("EXIT_CODE=\\$?\n");
         script.append("if ((\\$EXIT_CODE > 0));then\n");

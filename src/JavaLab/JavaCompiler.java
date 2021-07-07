@@ -1,23 +1,27 @@
+package JavaLab;
 
-public class JavaCompiler extends Compiler {
+import core.Util;
+import core.CodeCompiler;
+
+public class JavaCompiler extends CodeCompiler {
 
     public JavaCompiler(JavaCode codefiles) {
         super(codefiles, null);
-        this.setOutFile(mainfile);
+        this.setOutFile(this.getMainFile());
     }
 
     @Override
     public String scriptify() {
-        final int count = this.codefiles.getCount();
+        final int count = this.getCode().getCount();
         if (count == 0) {
-            Util.ERROR("Cannnot compile 0 files");
+            Util.ERROR("Cannot compile 0 files");
             return null;
         }
 
         final String compiler = this.getLanguage().getCompiler();
         final String extension = this.getLanguage().getExtension();
 
-        String[] titles = this.codefiles.getFileTitles();
+        String[] titles = this.getCode().getFileTitles();
         StringBuilder script = new StringBuilder();
         script.append("# +++++++++++++++++++++++++++++++++\n");
         script.append("#! /bin/bash\n");

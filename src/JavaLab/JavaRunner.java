@@ -1,23 +1,27 @@
+package JavaLab;
 
-public class CRunner extends Runner {
-    
-    public CRunner(Compiler compiler) {
+import core.Util;
+import core.CodeCompiler;
+import core.CodeRunner;
+
+public class JavaRunner extends CodeRunner {
+
+    public JavaRunner(JavaCompiler compiler) {
         super(compiler);
     }
 
     @Override
-    public String scriptify() {
-        if (this.compiler.getCode().getCount() == 0) {
+    protected String scriptify() {
+        if (this.getCompiler().getCode().getCount() == 0) {
             Util.ERROR("Cannot run 0 files");
             return null;
         }
+        String compiler  = this.getLanguage().getCompiler();
+        String runner    = this.getLanguage().getRunner();
+        String extension = this.getLanguage().getExtension();
 
-        final String compiler = this.getLanguage().getCompiler();
-        final String runner = this.getLanguage().getRunner();
-        final String extension = this.getLanguage().getExtension();
-
-        String compileFmt = "%s \\${prog1}%s -o %s &> grepLines.out\n";
-        String runFmt = "%s\\${run1}\n";
+        String compileFmt = "%s \\${prog1}%s  &> grepLines.out\n";
+        String runFmt = "%s \\${prog1}\n";
 
         StringBuilder script = new StringBuilder();
         script.append("# +++++++++++++++++++++++++++++++++\n");
@@ -26,9 +30,8 @@ public class CRunner extends Runner {
         script.append("#! /bin/bash\n");
         script.append("EXIT_CODE=-1\n");
         script.append("FAILED=false\n");
-        script.append(String.format("prog1=%s\n", this.compiler.getMainFile()));
-        script.append(String.format("run1=%s\n", this.runfile));
-        script.append(String.format(compileFmt, compiler, extension, this.runfile));
+        script.append(String.format("prog1=%s\n", this.getRunFile())); // same as mainfile in this case
+        script.append(String.format(compileFmt, compiler, extension));
         script.append("EXIT_CODE=\\$?\n");
         script.append("if ((\\$EXIT_CODE > 0));then\n");
         script.append("    FAILED=true\n");

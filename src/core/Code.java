@@ -1,43 +1,17 @@
+package core;
+
 import java.util.HashMap;
 import java.util.Map;
 
-class JavaCode extends Code {
-    public JavaCode(String dirpath) {
-        super(new Java(), dirpath);
-    }
-    public JavaCode(String dirpath, String mainfile) {
-        super(new Java(), dirpath, mainfile);
-    }
-}
-
-class CCode extends Code {
-    public CCode(String dirpath) {
-        super(new C(), dirpath);
-    }
-    public CCode(String dirpath, String mainfile) {
-        super(new C(), dirpath, mainfile);
-    }
-}
-
-class PythonCode extends Code {
-    public PythonCode(String dirpath) {
-        super(new Python3(), dirpath);
-    }
-    public PythonCode(String dirpath, String mainfile) {
-        super(new Python3(), dirpath, mainfile);
-    }
-}
-
-
 public abstract class Code {
     
-    protected final int count;
-    protected final String basePath;
-    protected final Language language;
-    protected final HashMap<String, String> files;
-    protected String mainfile;
+    private final int count;
+    private final String basePath;
+    private final Language language;
+    private final HashMap<String, String> files;
+    private String mainfile;
 
-    protected Code( Language language, String path) {
+    public Code( Language language, String path) {
         this(language, path, null);
         this.setMainFile(
             (this.count == 1) ? 
@@ -48,7 +22,7 @@ public abstract class Code {
         );
     }
 
-    protected Code(Language language, String path, String mainfile) {
+    public Code(Language language, String path, String mainfile) {
         this.basePath = path.charAt(path.length()-1) == '/' ? path : path.concat("/");
         this.language = language;
         this.mainfile = mainfile;
@@ -60,7 +34,7 @@ public abstract class Code {
         this.count = this.files.keySet().size();
     }
 
-    protected String locateMainFile() {
+    public String locateMainFile() {
         String regex = this.getLanguage().getMainRegex();
         for (Map.Entry<String, String> pair : this.files.entrySet()) {
             if (Util.checkRegex(regex, pair.getValue())) {
@@ -73,7 +47,7 @@ public abstract class Code {
         return null;
     }
 
-    protected String[] getFileTitles() {
+    public String[] getFileTitles() {
         String[] names = this.getFileNames();
         String[] titles = new String[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -82,7 +56,7 @@ public abstract class Code {
         return titles;
     }
 
-    protected String[] getFilePaths() {
+    public String[] getFilePaths() {
         String[] names = getFileNames();
         String[] filePaths = new String[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -91,7 +65,7 @@ public abstract class Code {
         return filePaths;
     }
 
-    protected void print() {
+    public void print() {
         for (Map.Entry<String, String> pair : this.files.entrySet()) {
             Util.ECHO(
                 String.format(
@@ -103,31 +77,31 @@ public abstract class Code {
         }
     }
     
-    protected void setMainFile(String mainfile) {
+    public void setMainFile(String mainfile) {
         this.mainfile = mainfile;
     }
 
-    protected String getMainFile() {
+    public String getMainFile() {
         return this.mainfile;
     }
 
-    protected Language getLanguage() {
+    public Language getLanguage() {
         return this.language;
     }
 
-    protected String getBasePath() {
+    public String getBasePath() {
         return this.basePath;
     }
     
-    protected int getCount() {
+    public int getCount() {
         return this.count;
     }
 
-    protected Map<String, String> getFileTree() {
+    public Map<String, String> getFileTree() {
         return this.files;
     }
 
-    protected String[] getFileNames() {
+    public String[] getFileNames() {
         return Util.getFileNames(this.basePath, this.language.getExtension());
     }
 

@@ -1,35 +1,36 @@
+package core;
 
-public abstract class Runner {
+public abstract class CodeRunner {
 
-    protected Compiler compiler;
-    protected String runfile;
+    private CodeCompiler compiler;
+    private String runfile;
 
-    protected Runner(Compiler compiler) {
+    public CodeRunner(CodeCompiler compiler) {
         this.compiler = compiler;
         this.runfile = this.compiler.getOutFile();
     }
 
-    protected void setRunFile(String runfile) {
+    public void setRunFile(String runfile) {
         this.runfile = runfile;
     }
 
-    protected String getRunFile() {
+    public String getRunFile() {
         return this.runfile;
     }
 
-    protected Compiler getCompiler() {
+    public CodeCompiler getCompiler() {
         return this.compiler;
     }
 
-    protected Language getLanguage() {
+    public Language getLanguage() {
         return this.compiler.getLanguage();
     }
 
-    protected void writeScript() {
+    public void writeScript() {
         this.writeScript(this.compiler.getCode().getBasePath()+"vpl_run.sh");
     }
     
-    protected void writeScript(String to) {
+    public void writeScript(String to) {
         Util.writeToFile(to, this.scriptify());
     }    
 

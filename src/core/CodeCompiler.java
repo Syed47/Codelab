@@ -1,45 +1,46 @@
+package core;
 
-public abstract class Compiler {
+public abstract class CodeCompiler {
 
-    protected Code codefiles;
-    protected String mainfile;
-    protected String outfile;
+    private Code codefiles;
+    private String mainfile;
+    private String outfile;
 
-    protected Compiler(Code codefiles, String outfile) {
+    public CodeCompiler(Code codefiles, String outfile) {
         this.codefiles = codefiles;
         this.outfile = outfile;
         this.setMainFile(this.codefiles.getMainFile());
     }
 
-    protected void writeScript() {
+    public void writeScript() {
         this.writeScript(this.codefiles.getBasePath()+"vpl_compile.sh");
     }
     
-    protected void writeScript(String to) {
+    public void writeScript(String to) {
         Util.writeToFile(to, this.scriptify());
     }    
 
-    protected Code getCode() {
+    public Code getCode() {
         return this.codefiles;
     }
 
-    protected Language getLanguage() {
+    public Language getLanguage() {
         return this.codefiles.getLanguage();
     }
     
-    protected String getOutFile() {
+    public String getOutFile() {
         return this.outfile;
     }
 
-    protected void setOutFile(String out) {
+    public void setOutFile(String out) {
         this.outfile = out;
     }
 
-    protected String getMainFile() {
+    public String getMainFile() {
         return this.mainfile;
     }
 
-    protected void setMainFile(String mf) {
+    public void setMainFile(String mf) {
         this.mainfile = mf;
     }
 

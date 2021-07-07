@@ -1,7 +1,13 @@
+package JavaLab;
 
-public class CEvaluator extends Evaluator {
+import core.Util;
+import core.Regex;
+import core.CodeRunner;
+import core.CodeEvaluator;
+
+public class JavaEvaluator extends CodeEvaluator {
     
-    CEvaluator(Runner runner) {
+    public JavaEvaluator(JavaRunner runner) {
         super(runner);
     }
 
@@ -44,12 +50,12 @@ public class CEvaluator extends Evaluator {
         script.append("\n# --------------------- GLOBAL VARIABLES -------------------\n");
 
         script.append(String.format("declare -a RegexList%d=(", 1));
-        for (Regex regex : this.regex.get(this.mainfile())) {
+        for (Regex regex : this.getRegex().get(this.mainfile())) {
             script.append("\""+regex.use()+"\" ");
         }
         script.append(")\n");
         script.append(String.format("declare -a Comment%d=(", 1));
-        for (Regex regex : this.regex.get(this.mainfile())) {
+        for (Regex regex : this.getRegex().get(this.mainfile())) {
             script.append("\""+regex.getComment()+"\" ");
         }
         script.append(")\n");
@@ -58,12 +64,12 @@ public class CEvaluator extends Evaluator {
         for (int i = 0; i < N; i++) {
             if (!titles[i].equals(this.mainfile())) {
                 script.append(String.format("declare -a RegexList%d=(", index));
-                for (Regex regex : this.regex.get(titles[i])) {
+                for (Regex regex : this.getRegex().get(titles[i])) {
                     script.append("\""+regex.use()+"\" ");
                 }
                 script.append(")\n");
                 script.append(String.format("declare -a Comment%d=(", index));
-                for (Regex regex : this.regex.get(titles[i])) {
+                for (Regex regex : this.getRegex().get(titles[i])) {
                     script.append("\""+regex.getComment()+"\" ");
                 }
                 script.append(")\n");
@@ -77,15 +83,18 @@ public class CEvaluator extends Evaluator {
             if (i != N-1) { script.append("+"); }
         }
         script.append("\n");
-        script.append(String.format("compileGrade=%d\n", this.cmplGrade.getTotal()));
-        script.append(String.format("regexGrade=%d\n", this.regGrade.getTotal()));
-        script.append(String.format("numberOfTestCases=%d\n", this.tcGrade.getCount()));
-        script.append(String.format("testCasesGrade=%d\n", this.tcGrade.getTotal()));
+        script.append(String.format("compileGrade=%d\n", this.getCmplGrade().getTotal()));
+        script.append(String.format("regexGrade=%d\n", this.getRegGrade().getTotal()));
+        script.append(String.format("numberOfTestCases=%d\n", this.getTcGrade().getCount()));
+        script.append(String.format("testCasesGrade=%d\n", this.getTcGrade().getTotal()));
         script.append("regex=regexGrade/numberOfRegex\n");
         script.append("testCase=testCasesGrade/numberOfTestCases\n");
 
         script.append("\n# ----------------- COMPILE STUDENT PROG  ----------------\n");
-        script.append(String.format("%s %s%s -o %s", compiler, this.mainfile(), extension, this.runfile()));
+        script.append(compiler+" ");
+        for (int i = 0; i < N; i++) {
+            script.append(String.format("%s%s ", titles[i], extension));
+        }
         script.append(" &> grepLines.out\n");
 
         script.append("\n");
@@ -135,7 +144,7 @@ public class CEvaluator extends Evaluator {
         script.append("\n# --- create test input files ---\n");
         for (int i = 0; i < this.getTests().size(); i++) {
             script.append(String.format("cat > data%d.txt <<EOF\n", i+1));
-            script.append(this.testIO.get(i).input);
+            script.append(this.getTestIOs().get(i).getInput());
             script.append("EOF\n");
         }
 
@@ -144,7 +153,7 @@ public class CEvaluator extends Evaluator {
         
         for (int i = 0; i < this.getTests().size(); i++) {
             script.append(String.format("cat > data%d.out <<EOF\n", i+1));
-            script.append(this.testIO.get(i).output);
+            script.append(this.getTestIOs().get(i).getOutput());
             script.append("EOF\n");
         }
 
@@ -154,7 +163,7 @@ public class CEvaluator extends Evaluator {
         script.append("    #---loops through the amount of test cases you specified at the top ---\n");
         script.append("    for((i=1;i<=\\$numberOfTestCases;i++))\n");
         script.append("    do\n");
-        script.append(String.format("       %s%s < data\\${i}.txt &> user.out\n", runner, this.runfile()));
+        script.append(String.format("       %s %s < data\\${i}.txt &> user.out\n", runner, this.runfile()));
         script.append("\n");
         script.append("       #--- compute difference ---\n");
         script.append("       echo \"---------------------\"\n");
@@ -213,6 +222,7 @@ public class CEvaluator extends Evaluator {
         script.append("\n");
         script.append("chmod +x vpl_execution\n");
 
-        return script.toString();        
+        return script.toString();   
+             
     }    
 }

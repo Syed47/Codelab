@@ -1,20 +1,22 @@
-import java.io.File;
+import core.*;
+import JavaLab.*;
+import CLab.*;
+import PythonLab.*;
 
 public class Main {
     public static void main(String[] args) {
-        Test.JAVA("../tests");
-        // Test.C("../tests");
-        // Test.PYTHON3("../tests");
-
+        Test.JAVA("./tests");
+//        Test.C("./tests");
+//        Test.PYTHON3( "./tests");
     }
 
     private static class Test {
         static void JAVA(String path) {
             Code labcode = new JavaCode(path);
-            Compiler compiler = new JavaCompiler((JavaCode)labcode);
-            Runner runner = new JavaRunner(compiler);
-            Evaluator evaluator = new JavaEvaluator(runner);
-    
+            CodeCompiler compiler = new JavaCompiler((JavaCode) labcode);
+            CodeRunner runner = new JavaRunner((JavaCompiler) compiler);
+            CodeEvaluator evaluator = new JavaEvaluator((JavaRunner) runner);
+
             evaluator.setCompileGrade(10);
             evaluator.setRegexGrade(30, 2);
             evaluator.setTestGrade(60, 4);
@@ -58,9 +60,9 @@ public class Main {
         // Compling, Running and Evaluating C Code
         static void C(String path) {
             Code code = new CCode(path);
-            Compiler compiler = new CCompiler((CCode)code, "run");
-            Runner runner = new CRunner(compiler);
-            CEvaluator evaluator = new CEvaluator(runner);
+            CodeCompiler compiler = new CCompiler((CCode) code, "run");
+            CodeRunner runner = new CRunner((CCompiler) compiler);
+            CEvaluator evaluator = new CEvaluator((CRunner) runner);
     
             evaluator.setCompileGrade(30);
             evaluator.setRegexGrade(40, 4);
@@ -86,9 +88,9 @@ public class Main {
     
         // Running and Evaluating Python3 Code
         static void PYTHON3(String path) {
-            PythonCode code = new PythonCode(path);
-            Runner runner = new PythonRunner(code, "app");
-            PythonEvaluator evaluator = new PythonEvaluator(runner);
+            Code code = new PythonCode(path);
+            CodeRunner runner = new PythonRunner((PythonCode) code, "app");
+            PythonEvaluator evaluator = new PythonEvaluator((PythonRunner) runner);
     
             evaluator.setCompileGrade(30);
             evaluator.setRegexGrade(40, 4);
@@ -111,7 +113,4 @@ public class Main {
             evaluator.writeScript();  
         }
     }
-    
-    // Compling, Running and Evaluating Java Code
-
 }

@@ -1,3 +1,4 @@
+package core;
 
 public final class Grade {
 
@@ -6,26 +7,26 @@ public final class Grade {
     private final int grade;
     private int acheived;
 
-    protected Grade(int total, int count) {
+    public Grade(int total, int count) {
         this.acheived = 0;
         this.total = total;
         this.count = count;
         this.grade = this.total/this.count;
     }
     
-    protected void increment() {
+    public void increment() {
         this.acheived += this.acheived < this.total ? this.grade : 0;
     }
 
-    protected int getCount() {
+    public int getCount() {
         return this.count;
     }
 
-    protected int getTotal() {
+    public int getTotal() {
         return this.total;
     }
 
-    protected int finalGrade() {
+    public int finalGrade() {
         return this.acheived;
     }
 }

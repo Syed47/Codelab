@@ -1,5 +1,9 @@
+package CLab;
 
-public class CCompiler extends Compiler {
+import core.Util;
+import core.CodeCompiler;
+
+public class CCompiler extends CodeCompiler {
 
     public CCompiler(CCode codefiles) {
         this(codefiles, "a.out");
@@ -10,8 +14,8 @@ public class CCompiler extends Compiler {
     }
 
     @Override
-    public String scriptify() {
-        final int count = this.codefiles.getCount();
+    protected String scriptify() {
+        final int count = this.getCode().getCount();
         if (count == 0) {
             Util.ERROR("Cannnot compile 0 files");
             return null;
@@ -28,21 +32,21 @@ public class CCompiler extends Compiler {
         script.append("EXIT_CODE=-1\n");
         script.append("FAILED=false\n");
 
-        script.append(String.format("prog1=%s\n", this.mainfile));
+        script.append(String.format("prog1=%s\n", this.getMainFile()));
 
         script.append(
             String.format(
                 "%s \\${prog1}%s -o %s &> grepLines.out\n", 
                 compiler,
                 extension,
-                this.outfile
+                this.getOutFile()
             )
         );
         script.append("EXIT_CODE=\\$?\n");
         script.append("if ((\\$EXIT_CODE > 0));then\n");
         script.append("    FAILED=true\n");
         script.append(
-            String.format("    echo \"%s failed to compile\"\n", this.mainfile)
+            String.format("    echo \"%s failed to compile\"\n", this.getMainFile())
         );
         script.append("fi\n");
 
