@@ -1,13 +1,21 @@
-import core.*;
-import JavaLab.*;
-import CLab.*;
-import PythonLab.*;
+import lib.core.*;
+import lib.javalab.*;
+import lib.clab.*;
+import lib.pythonlab.*;
 
 public class Main {
+
+    private static String outputPath = "./tests";
+
     public static void main(String[] args) {
-        Test.JAVA("./tests");
-//        Test.C("./tests");
-//        Test.PYTHON3( "./tests");
+        if (args.length > 0 && args[0] != null) {
+            Util.DEBUG("Program Args #="+args.length);
+            outputPath = "./"+args[0];
+            Util.createPathIfNotAlready(outputPath);
+        }
+        Test.JAVA(outputPath);
+        Test.C(outputPath);
+        Test.PYTHON3( outputPath);
     }
 
     private static class Test {
@@ -29,28 +37,11 @@ public class Main {
                 new Regex(".*public\\s\\+boolean\\s\\+compareSequence\\s*(.*).*", 
                 "a compare sequence method")
             );
-    
-            // evaluator.setTestData(
-            //     new File(labcode.getBasePath()+"data1.txt"), 
-            //     new File(labcode.getBasePath()+"data1.out")
-            // );
-            // evaluator.setTestData(
-            //     new File(labcode.getBasePath()+"data2.txt"), 
-            //     new File(labcode.getBasePath()+"data2.out")
-            // );
-            // evaluator.setTestData(
-            //     new File(labcode.getBasePath()+"data3.txt"), 
-            //     new File(labcode.getBasePath()+"data3.out")
-            // );
-            // evaluator.setTestData(
-            //     new File(labcode.getBasePath()+"data4.txt"), 
-            //     new File(labcode.getBasePath()+"data4.out")
-            // );
-    
-            evaluator.setTestData("johndoe\njohndoe\njohnnoe\n", "No Mutation detected!\n");
-            evaluator.setTestData("syed\nabcd\nefgh\n", "Mutation detected!\n");
-            evaluator.setTestData("jajja\nhajja\niaiia\n", "Mutation detected!\n");
-            evaluator.setTestData("test\ntae0\n1est\n", "No Mutation detected!\n");
+
+            evaluator.setTestData("johndoe\njohndoe\njohnnoe", "No Mutation detected!");
+            evaluator.setTestData("syed\nabcd\nefgh", "Mutation detected!");
+            evaluator.setTestData("jajja\nhajja\niaiia", "Mutation detected!");
+            evaluator.setTestData("test\ntae0\n1est", "No Mutation detected!");
     
             compiler.writeScript();
             runner.writeScript();
@@ -76,10 +67,10 @@ public class Main {
             evaluator.specifyRegex("util", new Regex(".*printf\\s*(.*).*", "a printf call"));
             evaluator.specifyRegex("util", new Regex(".*void\\s*sayHello\\s*(.*)\\s*{.*", "a sayHello function"));
     
-            evaluator.setTestData("syed\n", "Welcome syed.\n");
-            evaluator.setTestData("mule\n", "Welcome mule.\n");
-            evaluator.setTestData("john\n", "Welcome john.\n");
-            evaluator.setTestData("water\n", "Welcome water.\n");
+            evaluator.setTestData("syed", "Welcome syed.");
+            evaluator.setTestData("mule", "Welcome mule.");
+            evaluator.setTestData("john", "Welcome john.");
+            evaluator.setTestData("water", "Welcome water.");
     
             compiler.writeScript();
             runner.writeScript();
@@ -104,10 +95,10 @@ public class Main {
             evaluator.specifyRegex("libr", new Regex(".*class\\s\\+Person.*", "a Person class"));
             evaluator.specifyRegex("libr", new Regex(".*def\\s\\+__init__\\s*(.*).*", "a constructor"));
     
-            evaluator.setTestData("syed\n", "Name = syed.\n");
-            evaluator.setTestData("mule\n", "Name = mule.\n");
-            evaluator.setTestData("john\n", "Name = john.\n");
-            evaluator.setTestData("water\n", "Name = water.\n");
+            evaluator.setTestData("syed", "Name = syed.");
+            evaluator.setTestData("mule", "Name = mule.");
+            evaluator.setTestData("john", "Name = john.");
+            evaluator.setTestData("water", "Name = water.");
     
             runner.writeScript();
             evaluator.writeScript();  
