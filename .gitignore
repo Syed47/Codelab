@@ -4,6 +4,7 @@
 out/
 .idea/
 tests/
+".idea/"
 # ---------------------
 
 # [files]
