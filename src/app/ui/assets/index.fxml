@@ -1,0 +1,998 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="720.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1383.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.Controller">
+  <!--   LINE 41-->
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1374.0" prefWidth="720.0">
+
+            <TabPane prefHeight="1366.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <tabs>
+                <Tab text="JSON">
+
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="925.0" prefWidth="600.0">
+
+                              <VBox prefHeight="1200.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                                    <HBox alignment="CENTER" prefWidth="672.0">
+                        <ImageView fitHeight="53.0" fitWidth="139.0">
+                           <image>
+                              <Image url="@logoCrop.png" />
+                           </image>
+                        </ImageView>
+
+                                    </HBox>
+                                    <VBox fx:id="vb_CourseLevelData" prefWidth="100.0" spacing="20.0" />
+                                    <VBox fx:id="vb_LabLevelData" prefWidth="552.0" spacing="10.0">
+
+                                          <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+
+                                                <Label prefHeight="17.0" prefWidth="128.0" text="Lab label">
+                                                   <tooltip>
+                                                      <Tooltip text="The convention used for naming labs in your course.&#10;E.g. 'Lab', 'Week', 'Problem Set' etc.&#10;If you set this as 'Lab' for example, the first problem set of this type will be labelled &quot;Lab 01&quot; in the Workbook." />
+                                                   </tooltip>
+                                                </Label>
+                                                <TextField fx:id="tf_LabLabel" onKeyTyped="#setLabLabel" promptText="E.g. 'Lab', 'Week', 'Tutorial'" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="Each course has its own convention for naming its problem sets. This will be the term used for the problem sets in your couse. Common examples include 'Lab', 'Week', etc." />
+                                                   </tooltip></TextField>
+
+                                          </HBox>
+                                          <Label prefWidth="672.0" text="The four date-times below relate to all of the non-hidden questions in this lab.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox alignment="CENTER_LEFT">
+
+                                                <Label prefWidth="128.0" text="Access start" />
+                                                <HBox prefHeight="25.0" prefWidth="343.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                      <DatePicker fx:id="dp_AccessStart" onAction="#setAccessStartDate">
+                                                         <tooltip>
+                                                            <Tooltip text="Date at which these questions become visible to students." />
+                                                         </tooltip>
+                                                      </DatePicker>
+                                                      <TextField fx:id="tf_AccessStart_hour" onKeyTyped="#setAccessStartHour" prefHeight="25.0" prefWidth="39.0" promptText="hh">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Hour component (24h) of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+                                                      <Label text=":" />
+                                                      <TextField fx:id="tf_AccessStart_minute" onKeyTyped="#setAccessStartMinute" prefHeight="25.0" prefWidth="39.0" promptText="mm">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Minute component of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+
+                                                </HBox>
+
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT">
+
+                                                <Label prefWidth="128.0" text="Access end" />
+                                                <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="343.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                      <DatePicker fx:id="dp_AccessEnd" onAction="#setAccessEndDate">
+                                                         <tooltip>
+                                                            <Tooltip text="Date at which the students lose access to these questions." />
+                                                         </tooltip>
+                                                      </DatePicker>
+                                                      <TextField fx:id="tf_AccessEnd_hour" onKeyTyped="#setAccessEndHour" prefHeight="25.0" prefWidth="39.0" promptText="hh">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Hour component (24h) of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+                                                      <Label text=":" />
+                                                      <TextField fx:id="tf_AccessEnd_minute" onKeyTyped="#setAccessEndMinute" prefHeight="25.0" prefWidth="39.0" promptText="mm">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Minute component of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+
+                                                </HBox>
+
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT">
+
+                                                <Label prefWidth="128.0" text="CA eval start" />
+                                                <HBox prefHeight="25.0" prefWidth="343.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                      <DatePicker fx:id="dp_CaEvalStart" onAction="#setCAStartDate">
+                                                         <tooltip>
+                                                            <Tooltip text="Date from which students can evaluate these questions for a CA grade." />
+                                                         </tooltip>
+                                                      </DatePicker>
+                                                      <TextField fx:id="tf_CaEvalStart_hour" onKeyTyped="#setCAStartHour" prefHeight="25.0" prefWidth="39.0" promptText="hh">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Hour component (24h) of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+                                                      <Label text=":" />
+                                                      <TextField fx:id="tf_CaEvalStart_minute" onKeyTyped="#setCAStartMinute" prefHeight="25.0" prefWidth="39.0" promptText="mm">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Minute component of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+
+                                                </HBox>
+
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT">
+
+                                                <Label prefWidth="128.0" text="CA eval end" />
+                                                <HBox prefHeight="25.0" prefWidth="343.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                      <DatePicker fx:id="dp_CaEvalEnd" onAction="#setCAEndDate">
+                                                         <tooltip>
+                                                            <Tooltip text="Date on which student's lose ability to evaluate these questions for a CA grade." />
+                                                         </tooltip>
+                                                      </DatePicker>
+                                                      <TextField fx:id="tf_CaEvalEnd_hour" onKeyTyped="#setCAEndHour" prefHeight="25.0" prefWidth="39.0" promptText="hh">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Hour component (24h) of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+                                                      <Label text=":" />
+                                                      <TextField fx:id="tf_CaEvalEnd_minute" onKeyTyped="#setCAEndMinute" prefHeight="25.0" prefWidth="39.0" promptText="mm">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="Minute component of this date-time" />
+                                                         </tooltip>
+                                                      </TextField>
+
+                                                </HBox>
+
+                                          </HBox>
+
+                                    </VBox>
+                                    <Separator layoutX="10.0" layoutY="209.0" prefWidth="200.0" />
+                                    <VBox fx:id="vb_QuestionLevelData" prefWidth="552.0" spacing="10.0">
+
+                                          <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+
+                                                <Label prefHeight="17.0" prefWidth="128.0" text="Course code" />
+                                                <TextField fx:id="tf_CourseName" onKeyTyped="#setCourseName" promptText="E.g. 'CS161'" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="The module or course code (begins with 'CS' for Computer Science modules)" />
+                                                   </tooltip></TextField>
+
+                                          </HBox>
+                                          <HBox fx:id="" alignment="CENTER_LEFT" prefWidth="200.0">
+
+                                                <Label prefHeight="17.0" prefWidth="128.0" text="Lab number">
+                                                   <tooltip>
+                                                      <Tooltip text="The convention used for naming labs in your course.&#10;E.g. 'Lab', 'Week', 'Problem Set' etc." />
+                                                   </tooltip>
+                                                </Label>
+                                                <TextField fx:id="tf_LabNumber" onKeyTyped="#setLabNumber" promptText="E.g. '1'" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="The number of this lab in its sequence." />
+                                                   </tooltip>
+                                                </TextField>
+
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+
+                                                <Label prefHeight="17.0" prefWidth="128.0" text="Question number" />
+                                                <TextField fx:id="tf_QuestionNumber" onKeyTyped="#setQuestionNumber" promptText="E.g. '1'" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="This question's number in its sequence." />
+                                                   </tooltip>
+                                                </TextField>
+
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="47.0" prefWidth="200.0">
+
+                                                <Label prefHeight="17.0" prefWidth="128.0" text="Question title" />
+                                                <TextField fx:id="tf_QuestionTitle" onKeyTyped="#setQuestionTitle" promptText="E.g. 'Hello World'" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="A title for the question. This may refer to the topic or the task. E.g. 'Hello World', '2D Array', etc." />
+                                                   </tooltip>
+                                                </TextField>
+
+                                          </HBox>
+                                          <Separator prefHeight="21.0" prefWidth="672.0" />
+                                          <VBox fx:id="vb_JavaFileNames" prefHeight="153.0" prefWidth="600.0" spacing="5.0">
+
+                                                <Label text="Code file names" />
+                                                <HBox alignment="CENTER_LEFT" prefWidth="600.0" spacing="5.0">
+
+                                                      <TextField fx:id="tf_CodeFileNames" prefWidth="541.0" promptText="E.g. 'HelloWorld.java'" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font name="Consolas" size="12.0" />
+                                                         </font>
+                                                         <tooltip>
+                                                            <Tooltip text="File names of the code written by students. Enter a file name and click 'Add'." />
+                                                         </tooltip></TextField>
+                                                      <Button fx:id="btn_JavaFileNames_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMousePressed="#addCodeFile" text="Add">
+                                                         <tooltip>
+                                                            <Tooltip text="Enter a file name in the field to the left and click this to add it to the list below." />
+                                                         </tooltip></Button>
+                                                      <Button fx:id="btn_JavaFileNames_Delete" minWidth="60.0" mnemonicParsing="false" onMousePressed="#removeCodeFile" text="Delete">
+                                                         <tooltip>
+                                                            <Tooltip text="Select a file name from the list below and click this to remove it." />
+                                                         </tooltip></Button>
+
+                                                </HBox>
+                                                <ListView fx:id="list_CodeFileNames" fixedCellSize="0.0" prefHeight="56.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="This section displays a list of the file names added so far." />
+                                                   </tooltip></ListView>
+
+                                          </VBox>
+                                          <Separator prefHeight="24.0" prefWidth="672.0" />
+                                          <HBox prefHeight="34.0" prefWidth="672.0">
+
+                                                <CheckBox fx:id="cb_IsHiddenQuestion" allowIndeterminate="false" mnemonicParsing="false" onAction="#setQuestionHidden" prefHeight="30.0" prefWidth="233.0" selected="false" text="This is a hidden question">
+                                                   <tooltip>
+                                                      <Tooltip text="Check this box if the question will only be visible and open to evaluation during a specified lab session." />
+                                                   </tooltip>
+                                                </CheckBox>
+
+                                          </HBox>
+                                          <VBox fx:id="vb_HiddenQuestionData" disable="true" prefWidth="552.0" spacing="10.0">
+
+                                                <VBox fx:id="vb_Hidden_LabSessions" prefHeight="233.0" prefWidth="552.0" spacing="5.0">
+
+                                                      <Label text="Lab sessions" />
+                                                      <HBox alignment="CENTER_LEFT" prefWidth="600.0" spacing="5.0">
+
+                                                            <TextField fx:id="tf_Hidden_LabSessions_Group" onKeyTyped="#setLabGroup" prefHeight="25.0" prefWidth="212.0" promptText="Group name e.g. 'red'" HBox.hgrow="ALWAYS">
+                                                               <tooltip>
+                                                                  <Tooltip text="Each lab session is accessible to only a single group of students. Enter a name for a group." />
+                                                               </tooltip></TextField>
+                                                            <HBox fx:id="hb_LabSessions" alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="279.0" spacing="5.0">
+
+                                                                  <DatePicker fx:id="dp_Hidden_LabSessionDate" onAction="#setLabSessionDate" prefHeight="24.0" prefWidth="175.0" promptText="Date of lab session">
+                                                                     <tooltip>
+                                                                        <Tooltip text="Set the date of the lab session." />
+                                                                     </tooltip></DatePicker>
+                                                                  <TextField fx:id="tf_Hidden_LabSessions_hour" onKeyTyped="#setLabSessionHour" prefHeight="25.0" prefWidth="40.0" promptText="hh">
+                                                                     <font>
+                                                                        <Font name="Consolas" size="12.0" />
+                                                                     </font>
+                                                                     <tooltip>
+                                                                        <Tooltip text="Set the hour component (24h) of the time of the lab session." />
+                                                                     </tooltip></TextField>
+                                                                  <Label text=":" />
+                                                                  <TextField fx:id="tf_Hidden_LabSessions_minute" onKeyTyped="#setLabSessionMinute" prefHeight="25.0" prefWidth="40.0" promptText="mm">
+                                                                     <font>
+                                                                        <Font name="Consolas" size="12.0" />
+                                                                     </font>
+                                                                     <tooltip>
+                                                                        <Tooltip text="Set the minute component of the time of the lab session." />
+                                                                     </tooltip></TextField>
+
+                                                            </HBox>
+                                                            <Button fx:id="btn_Hidden_LabSessions_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#addToSessionsTable" text="Add">
+                                                               <tooltip>
+                                                                  <Tooltip text="Enter the details of a lab session in the fields to the left and click this to add the session." />
+                                                               </tooltip></Button>
+                                                            <Button fx:id="btn_Hidden_LabSessions_Delete" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#removeFromSessionsTable" text="Delete">
+                                                               <tooltip>
+                                                                  <Tooltip text="Select a lab session in the table below and click this to delete it." />
+                                                               </tooltip></Button>
+
+                                                      </HBox>
+                                                      <TableView fx:id="table_Hidden_LabSessions" prefHeight="139.0" prefWidth="552.0" VBox.vgrow="ALWAYS">
+                                                        <columns>
+                                                          <TableColumn fx:id="tc_GroupColumn" minWidth="50.0" prefWidth="143.33319664001465" text="Group" />
+                                                          <TableColumn fx:id="tc_DateColumn" prefWidth="180.66661071777344" text="Date" />
+                                                          <TableColumn fx:id="tc_TimeColumn" minWidth="4.0001220703125" prefWidth="98.666748046875" text="Time" />
+                                                        </columns>
+                                                         <tooltip>
+                                                            <Tooltip text="This is a table of the lab sessions added so far." />
+                                                         </tooltip>
+                                                      </TableView>
+
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </VBox>
+                                                <HBox alignment="CENTER_LEFT">
+
+                                                      <Label prefWidth="128.0" text="Lab session length" />
+                                                      <HBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                            <TextField fx:id="tf_Hidden_LabSessionLength_hours" alignment="CENTER_RIGHT" onKeyTyped="#setLabSessionLengthHour" prefHeight="25.0" prefWidth="51.0" text="0">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Hour component of the session length" />
+                                                               </tooltip>
+                                                            </TextField>
+                                                            <Label text="hr" />
+                                                            <TextField fx:id="tf_Hidden_LabSessionLength_minutes" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" onKeyTyped="#setLabSessionLengthMinute" prefHeight="25.0" prefWidth="51.0" text="0">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Minute component of the session length" />
+                                                               </tooltip>
+                                                            </TextField>
+                                                            <Label layoutX="67.0" layoutY="10.0" text="min" />
+
+                                                      </HBox>
+
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT">
+
+                                                      <Label prefWidth="128.0" text="PG access start" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="343.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                            <DatePicker fx:id="dp_Hidden_PgStart_date" onAction="#setHiddenPgStartDate">
+                                                               <tooltip>
+                                                                  <Tooltip text="Date from which students regain access to this question to evaluate for a Personal Grade." />
+                                                               </tooltip></DatePicker>
+                                                            <TextField fx:id="tf_Hidden_PgStart_hour" onKeyTyped="#setHiddenPgStartHour" prefHeight="25.0" prefWidth="39.0" promptText="hh">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Hour component (24h) of this date-time" />
+                                                               </tooltip></TextField>
+                                                            <Label text=":" />
+                                                            <TextField fx:id="tf_Hidden_PgStart_minute" onKeyTyped="#setHiddenPgStartMinute" prefHeight="25.0" prefWidth="39.0" promptText="mm">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Minute component of this date-time" />
+                                                               </tooltip></TextField>
+
+                                                      </HBox>
+
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="34.0" layoutY="289.0">
+
+                                                      <Label prefWidth="128.0" text="PG access end" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="343.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                            <DatePicker fx:id="dp_Hidden_PgEnd_date" onAction="#setHiddenPgEndDate">
+                                                               <tooltip>
+                                                                  <Tooltip text="Date at which the students lose access to this hidden question." />
+                                                               </tooltip>
+                                                            </DatePicker>
+                                                            <TextField fx:id="tf_Hidden_PgEnd_hour" onKeyTyped="#setHiddenPgEndHour" prefHeight="25.0" prefWidth="39.0" promptText="hh">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Hour component (24h) of this date-time" />
+                                                               </tooltip>
+                                                            </TextField>
+                                                            <Label text=":" />
+                                                            <TextField fx:id="tf_Hidden_PgEnd_minute" onKeyTyped="#setHiddenPgEndMinute" prefHeight="25.0" prefWidth="39.0" promptText="mm">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Minute component of this date-time" />
+                                                               </tooltip>
+                                                            </TextField>
+
+                                                      </HBox>
+
+                                                </HBox>
+
+                                             <padding>
+                                                <Insets left="24.0" />
+                                             </padding>
+                                          </VBox>
+
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox alignment="CENTER" prefHeight="56.0" prefWidth="672.0">
+
+                                          <Button fx:id="btn_JSON_Generate" defaultButton="true" mnemonicParsing="false" onMousePressed="#printJSON" onMouseReleased="#generateJSONFiles" prefHeight="36.0" prefWidth="99.0" text="Generate">
+                                             <tooltip>
+                                                <Tooltip text="When all the details on this tab have been entered and double-checked. Click this to generate the relevant files." />
+                                             </tooltip>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+
+                                    </HBox>
+
+                                 <padding>
+                                    <Insets bottom="32.0" left="24.0" right="24.0" top="32.0" />
+                                 </padding>
+                              </VBox>
+
+                        </AnchorPane>
+
+                </Tab>
+                <Tab text="HTML">
+
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="32.0" left="24.0" right="24.0" top="32.0" />
+                                 </padding>
+
+                                    <VBox fx:id="vb_DescriptionBody" prefWidth="552.0" spacing="5.0">
+
+                                          <Label text="Description body" />
+                                          <TextArea fx:id="ta_DescriptionBody" onKeyTyped="#setDescription" prefHeight="143.0" prefWidth="552.0" VBox.vgrow="ALWAYS">
+                                             <tooltip>
+                                                <Tooltip text="This will represent the main body of your question description. To render text as a sub-heading, wrap it in &lt;h4&gt; HTML tags. E.g. '&lt;h4&gt;Sub-heading Goes Here&lt;/h4&gt;'" />
+                                             </tooltip></TextArea>
+
+                                    </VBox>
+                                    <VBox fx:id="vb_Images" prefHeight="128.0" prefWidth="552.0" spacing="5.0">
+
+                                          <Label text="Images" />
+                                          <HBox spacing="5.0">
+
+                                                <TextField fx:id="tf_Images" promptText="Enter an image URL" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="Enter an image URL. Images must be hosted on the web. Make sure the image is hosted at a location where it will not be removed while students are accessing this lab question. Insertion of locally stored images is not supported at this time." />
+                                                   </tooltip></TextField>
+                                                <Button fx:id="btn_Images_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#addImage" text="Add" />
+                                                <Button fx:id="btn_Images_Delete" layoutX="524.0" layoutY="10.0" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#removeImage" text="Delete">
+                                                   <tooltip>
+                                                      <Tooltip text="Select an item on the list and click this to remove it." />
+                                                   </tooltip></Button>
+
+                                          </HBox>
+                                          <ListView fx:id="list_Images" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+
+                                    </VBox>
+                                    <VBox fx:id="vb_Notes" layoutX="34.0" layoutY="252.0" prefHeight="128.0" prefWidth="552.0" spacing="5.0">
+
+                                          <Label text="Notes" />
+                                          <HBox spacing="5.0">
+
+                                                <TextField fx:id="tf_Notes" promptText="Enter a note" HBox.hgrow="ALWAYS">
+                                                   <tooltip>
+                                                      <Tooltip text="Is there a particular piece of information you want to highlight to students? Enter it here as a note." />
+                                                   </tooltip></TextField>
+                                                <Button fx:id="btn_Notes_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#addNote" text="Add" />
+                                                <Button fx:id="btn_Notes_Delete" layoutX="524.0" layoutY="10.0" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#removeNote" text="Delete">
+                                                   <tooltip>
+                                                      <Tooltip text="Select an item on the list and click this to remove it." />
+                                                   </tooltip></Button>
+
+                                          </HBox>
+                                          <ListView fx:id="list_Notes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+
+                                    </VBox>
+                                    <VBox fx:id="vb_CodeSamples" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+
+                                          <Label text="Code samples" />
+                                          <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+
+                                                <TextArea fx:id="ta_CodeSamples" prefHeight="200.0" prefWidth="200.0" promptText="Enter a piece of sample code" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Consolas" size="12.0" />
+                                                   </font>
+                                                   <tooltip>
+                                                      <Tooltip text="You may want to display some code snippets in the question description. Enter a code snippet and press 'Add'." />
+                                                   </tooltip>
+                                                </TextArea>
+                                                <VBox alignment="CENTER" prefHeight="177.0" prefWidth="73.0" spacing="20.0">
+
+                                                      <Button fx:id="btn_CodeSamples_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#addCodeSample" text="Add" />
+                                                      <Button fx:id="btn_CodeSamples_Delete" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#removeCodeSample" text="Delete">
+                                                         <tooltip>
+                                                            <Tooltip text="Select an item on the list and click this to remove it." />
+                                                         </tooltip></Button>
+
+                                                </VBox>
+                                                <ListView fx:id="list_CodeSamples" onMousePressed="#loadCodeSampleIntoEditor" prefHeight="179.0" prefWidth="180.0" />
+
+                                          </HBox>
+
+                                    </VBox>
+                                    <VBox fx:id="vb_OutputType" prefWidth="100.0" spacing="10.0">
+
+                                          <Label text="Type of output to be displayed:" />
+                                          <VBox prefWidth="100.0" spacing="5.0">
+
+                                                <RadioButton fx:id="rb_OutputType_SampleIO" mnemonicParsing="false" onMouseReleased="#setOutputType" text="Sample input/output">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="rb_TypeOfOutputChooser" />
+                                                   </toggleGroup>
+                                                   <tooltip>
+                                                      <Tooltip text="Most questions will test the student's output against a number of given inputs. Select this option if you would like to display some sample inputs/outputs to the student." />
+                                                   </tooltip>
+                                                </RadioButton>
+                                                <RadioButton fx:id="rb_OutputType_Single" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseReleased="#setOutputType" text="Single expected output" toggleGroup="$rb_TypeOfOutputChooser">
+                                                   <tooltip>
+                                                      <Tooltip text="Some questions expect a single static output. Such outputs are not dependant on the values of variables or on user input etc. Select this option if you would like to display the expected output to the student." />
+                                                   </tooltip></RadioButton>
+                                                <RadioButton fx:id="rb_OutputType_None" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" onMouseReleased="#setOutputType" selected="true" text="None" toggleGroup="$rb_TypeOfOutputChooser">
+                                                   <tooltip>
+                                                      <Tooltip text="Select this option if you do not want to display input/output information to the student." />
+                                                   </tooltip></RadioButton>
+
+                                             <VBox.margin>
+                                                <Insets left="24.0" />
+                                             </VBox.margin>
+                                          </VBox>
+
+                                    </VBox>
+                                    <VBox fx:id="vb_SampleIO" disable="true" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+
+                                          <Label text="Sample input/output" />
+                                          <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+
+                                                <TextArea fx:id="ta_SampleIO_Input" prefHeight="200.0" prefWidth="200.0" promptText="Input" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Consolas" size="12.0" />
+                                                   </font>
+                                                   <tooltip>
+                                                      <Tooltip text="Enter the input of the sample test case" />
+                                                   </tooltip>
+                                                </TextArea>
+                                                <TextArea fx:id="ta_SampleIO_Output" layoutX="10.0" layoutY="10.0" prefHeight="176.0" prefWidth="216.0" promptText="Output" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Consolas" size="12.0" />
+                                                   </font>
+                                                   <tooltip>
+                                                      <Tooltip text="Enter the output of a sample test case" />
+                                                   </tooltip>
+                                                </TextArea>
+                                                <VBox alignment="CENTER" prefHeight="176.0" prefWidth="67.0" spacing="20.0">
+
+                                                      <Button fx:id="btn_SampleIO_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMousePressed="#addSampleIO" text="Add" />
+                                                      <Button fx:id="btn_SampleIO_Delete" minWidth="60.0" mnemonicParsing="false" onMousePressed="#removeSampleIO" onMouseReleased="#printHTML" text="Delete">
+                                                         <tooltip>
+                                                            <Tooltip text="Select an item on the list and click this to remove it." />
+                                                         </tooltip></Button>
+
+                                                </VBox>
+                                                <ListView fx:id="list_SampleIO" onMousePressed="#loadSampleIOIntoEditors" prefHeight="176.0" prefWidth="179.0" />
+
+                                          </HBox>
+
+                                    </VBox>
+                                    <VBox fx:id="vb_SingleOutput" disable="true" prefWidth="552.0" spacing="5.0">
+
+                                          <Label text="Single expected output" />
+                                          <TextArea fx:id="ta_SingleOutput" onKeyTyped="#setSingleOutput" prefHeight="143.0" prefWidth="552.0" promptText="Enter the expected output" VBox.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Consolas" size="12.0" />
+                                             </font>
+                                             <tooltip>
+                                                <Tooltip text="Enter the expected output." />
+                                             </tooltip>
+                                          </TextArea>
+
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox alignment="CENTER" prefHeight="61.0" prefWidth="672.0">
+
+                                          <Button fx:id="btn_HTML_Generate" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onMousePressed="#generateHTMLFiles" prefHeight="36.0" prefWidth="99.0" text="Generate">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Button>
+
+                                    </HBox>
+
+                              </VBox>
+                           </AnchorPane>
+
+                </Tab>
+                  <Tab text="Scripts">
+
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                              <VBox layoutX="245.0" layoutY="158.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="32.0" left="24.0" right="24.0" top="32.0" />
+                                 </padding>
+
+                                    <VBox fx:id="vb_Lang" alignment="CENTER_LEFT" prefWidth="100.0" spacing="10.0">
+
+                                          <Label text="Question language" />
+                                          <VBox prefWidth="100.0" spacing="5.0">
+
+                                                <RadioButton fx:id="rb_Lang_Java" mnemonicParsing="false" onMouseReleased="#setLabLanguage" text="Java">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="rb_Lang" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="rb_Lang_Python" mnemonicParsing="false" onMouseReleased="#setLabLanguage" text="Python" toggleGroup="$rb_Lang" />
+                                                <RadioButton fx:id="rb_Lang_C" mnemonicParsing="false" onMouseReleased="#setLabLanguage" text="C" toggleGroup="$rb_Lang" />
+
+                                             <VBox.margin>
+                                                <Insets left="24.0" />
+                                             </VBox.margin>
+                                          </VBox>
+
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                    <VBox fx:id="vb_CodeFileOptions" prefHeight="515.0" prefWidth="672.0" spacing="5.0">
+
+                                          <HBox alignment="CENTER" prefWidth="200.0">
+
+                                                <Label text="Code file options" underline="true" />
+
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <Label text="Select a file from the list below and use the 'accordion' menu to set various options for that file" />
+                                          <Label text="Files" />
+                                          <ListView fx:id="list_CodeFileOptions_Files" onMouseReleased="#selectFile" prefHeight="124.0" prefWidth="672.0" />
+                                          <HBox prefWidth="200.0">
+
+                                                <Label text="Set options for: ">
+                                                   <font>
+                                                      <Font name="System Italic" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="label_SelectedFileDisplay" text="Filename.ext" textFill="#808080">
+                                                   <font>
+                                                      <Font name="Consolas" size="13.0" />
+                                                   </font>
+                                                </Label>
+
+                                          </HBox>
+                                          <Accordion prefHeight="319.0" prefWidth="552.0">
+                                             <panes>
+                                                <TitledPane fx:id="titledpane_CodeFileOptions_SetAsMain" animated="false" prefHeight="243.0" prefWidth="672.0" text="Set as Main file">
+
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                                                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                                                                  <Label text="For questions where there are multiple code files, one file must be selected as the 'Main' file, or the entry point to the program. For example, in Java questions this will be the file which contains the 'main' method." textAlignment="CENTER" wrapText="true" />
+                                                                  <Button fx:id="btn_CodeFileOptions_SetAsMain_Set" defaultButton="true" mnemonicParsing="false" onMouseReleased="#selectAsMainFile" text="Set selected file as Main" />
+                                                                  <HBox alignment="CENTER" spacing="5.0">
+
+                                                                        <Label text="The Main file is:" />
+                                                                        <Label fx:id="label_CodeFileOptions_SetAsMain_MainFileDisplay" text="Filename.ext" textFill="GREY">
+                                                                           <font>
+                                                                              <Font name="Consolas" size="13.0" />
+                                                                           </font>
+                                                                        </Label>
+
+                                                                     <VBox.margin>
+                                                                        <Insets top="10.0" />
+                                                                     </VBox.margin>
+                                                                  </HBox>
+
+                                                            </VBox>
+
+                                                      </AnchorPane>
+
+                                                </TitledPane>
+                                                <TitledPane fx:id="titledpane_CodeFileOptions_StartCode" animated="false" expanded="false" prefHeight="241.0" prefWidth="672.0" text="Start code">
+
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                                                            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                                                                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+
+                                                                        <Label text="Start code" />
+
+                                                                  </HBox>
+                                                                  <TextArea fx:id="ta_CodeFileOptions_StartCode_StartCode" prefHeight="119.0" prefWidth="650.0" promptText="class Main {  /* code */  }" VBox.vgrow="ALWAYS">
+                                                                     <font>
+                                                                        <Font name="Consolas" size="12.0" />
+                                                                     </font>
+                                                                     <tooltip>
+                                                                        <Tooltip text="If you want this file to contain code when the student first opens it, enter the code here." />
+                                                                     </tooltip>
+                                                                  </TextArea>
+                                                                  <Button fx:id="btn_CodeSubmit" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onMouseReleased="#setStartingCode" text="Submit">
+                                                                     <VBox.margin>
+                                                                        <Insets top="10.0" />
+                                                                     </VBox.margin>
+                                                                  </Button>
+
+                                                            </VBox>
+
+                                                      </AnchorPane>
+
+                                                </TitledPane>
+                                                <TitledPane fx:id="titledpane_CodeFileOptions_Regexes" animated="false" expanded="false" prefHeight="247.0" prefWidth="672.0" text="Regexes">
+
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                                                            <HBox prefHeight="300.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                                                                  <VBox prefHeight="187.0" prefWidth="323.0" spacing="5.0">
+
+                                                                        <ComboBox fx:id="combo_CodeFileOptions_Regexes_Predefined" prefHeight="25.0" prefWidth="333.0" promptText="Select a predefined regex" />
+                                                                        <VBox prefHeight="200.0" prefWidth="100.0">
+
+                                                                              <Label text="Regex (editable)" />
+                                                                              <TextArea fx:id="ta_CodeFileOptions_Regexes_RegexEditable" prefHeight="200.0" prefWidth="200.0" wrapText="true" VBox.vgrow="ALWAYS">
+                                                                                 <font>
+                                                                                    <Font name="Consolas" size="12.0" />
+                                                                                 </font>
+                                                                                 <tooltip>
+                                                                                    <Tooltip text="Enter a regex to search for a pattern in the code file at evaluation. Alternatively, select a predefined regex from the combo box above and edit it here before adding." />
+                                                                                 </tooltip>
+                                                                              </TextArea>
+
+                                                                        </VBox>
+                                                                        <VBox prefWidth="100.0" spacing="2.0">
+
+                                                                              <Label text="Comment (editable)" />
+                                                                              <TextField fx:id="tf_CodeOptions_Regexes_Comment">
+                                                                                 <tooltip>
+                                                                                    <Tooltip text="Add the comment a student will see in their terminal when they evaluate and the script has found the required pattern." />
+                                                                                 </tooltip></TextField>
+
+                                                                        </VBox>
+                                                                        <VBox prefWidth="100.0" spacing="2.0" />
+
+                                                                  </VBox>
+                                                                  <VBox alignment="CENTER" prefHeight="224.0" prefWidth="219.0" spacing="5.0" HBox.hgrow="ALWAYS">
+
+                                                                        <ListView fx:id="list_CodeFileOptions_Regexes" onMouseReleased="#loadRegexIntoEditors" prefHeight="193.0" prefWidth="219.0" VBox.vgrow="ALWAYS" />
+                                                                        <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
+
+                                                                              <Button fx:id="btn_CodeFileOptions_Regexes_Add" defaultButton="true" mnemonicParsing="false" onMouseReleased="#addRegex" prefHeight="24.0" prefWidth="71.0" text="Add" />
+                                                                              <Button fx:id="btn_CodeFileOptions_Regexes_Delete" mnemonicParsing="false" onMouseReleased="#removeRegex" prefHeight="24.0" prefWidth="71.0" text="Delete">
+                                                                                 <tooltip>
+                                                                                    <Tooltip text="Select an item on the list and click this to remove it." />
+                                                                                 </tooltip></Button>
+
+                                                                        </HBox>
+
+                                                                  </VBox>
+
+                                                            </HBox>
+
+                                                      </AnchorPane>
+
+                                                </TitledPane>
+                                             </panes>
+                                          </Accordion>
+
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                    <VBox fx:id="vb_TestCases" prefHeight="360.0" prefWidth="672.0" spacing="5.0">
+
+                                          <Label text="Test cases" />
+                                          <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+
+                                                <TextArea fx:id="ta_TestCases_Input" prefHeight="200.0" prefWidth="200.0" promptText="Input" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Consolas" size="12.0" />
+                                                   </font>
+                                                   <tooltip>
+                                                      <Tooltip text="The input of your next test case" />
+                                                   </tooltip>
+                                                </TextArea>
+                                                <TextArea fx:id="ta_TestCases_Output" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" promptText="Output" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="Consolas" size="12.0" />
+                                                   </font>
+                                                   <tooltip>
+                                                      <Tooltip text="Output of your next test case" />
+                                                   </tooltip>
+                                                </TextArea>
+
+                                          </HBox>
+                                          <HBox alignment="BOTTOM_CENTER" prefHeight="24.0" prefWidth="643.0" spacing="5.0">
+
+                                                <Button fx:id="btn_TestCases_Add" defaultButton="true" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#addTestCaseIO" prefHeight="24.0" prefWidth="62.0" text="Add" />
+                                                <Button fx:id="btn_TestCases_Delete" minWidth="60.0" mnemonicParsing="false" onMouseReleased="#removeTestCaseIO" prefHeight="24.0" prefWidth="62.0" text="Delete">
+                                                   <tooltip>
+                                                      <Tooltip text="Select a session from the table and click this to remove it." />
+                                                   </tooltip></Button>
+
+                                          </HBox>
+                                          <TableView fx:id="table_TestCases" prefHeight="137.0" prefWidth="672.0">
+                                            <columns>
+                                              <TableColumn fx:id="tc_InputColumn" prefWidth="335.3333034515381" text="Sample inputs" />
+                                              <TableColumn fx:id="tc_OutputColumn" minWidth="0.0" prefWidth="335.3333435058594" text="Sample outputs" />
+                                            </columns>
+                                          </TableView>
+
+                                    </VBox>
+                                    <VBox fx:id="vb_gradeProportions" prefWidth="100.0" spacing="10.0">
+
+                                          <Label text="Proportion of grade awarded for each mode of evaluation" />
+                                          <Label text="NOTE: The three numbers entered below must sum to 100">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+
+                                                <VBox prefWidth="300.0" spacing="10.0">
+
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="339.0">
+
+                                                            <Label prefHeight="17.0" prefWidth="128.0" text="Compiling">
+                                                               <tooltip>
+                                                                  <Tooltip text="The convention used for naming labs in your course.&#10;E.g. 'Lab', 'Week', 'Problem Set' etc." />
+                                                               </tooltip>
+                                                            </Label>
+                                                            <TextField fx:id="tf_GradeProportions_Compile" alignment="CENTER_RIGHT" onKeyTyped="#setCompileGrade" prefHeight="25.0" prefWidth="49.0" text="0">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Percentage of the grade awarded for sucessfully compiling" />
+                                                               </tooltip>
+                                                            </TextField>
+                                                            <Label text=" / 100">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                            </Label>
+
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+
+                                                            <Label prefHeight="17.0" prefWidth="128.0" text="Passing regex tests">
+                                                               <tooltip>
+                                                                  <Tooltip text="The convention used for naming labs in your course.&#10;E.g. 'Lab', 'Week', 'Problem Set' etc." />
+                                                               </tooltip>
+                                                            </Label>
+                                                            <TextField fx:id="tf_GradeProportions_Regex" alignment="CENTER_RIGHT" onKeyTyped="#setRegexGrade" prefHeight="25.0" prefWidth="49.0" text="0">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Percentage of the grade awarded for static evaluation i.e. passing the regex tests" />
+                                                               </tooltip>
+                                                            </TextField>
+                                                            <Label text=" / 100">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                            </Label>
+
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+
+                                                            <Label prefHeight="17.0" prefWidth="128.0" text="Passing test cases">
+                                                               <tooltip>
+                                                                  <Tooltip text="The convention used for naming labs in your course.&#10;E.g. 'Lab', 'Week', 'Problem Set' etc." />
+                                                               </tooltip>
+                                                            </Label>
+                                                            <TextField fx:id="tf_GradeProportions_TestCases" alignment="CENTER_RIGHT" onKeyTyped="#setTestCaseIOGrade" prefHeight="25.0" prefWidth="49.0" text="0">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="Portion of the grade awarded for dynamic evaluation i.e. passing the test cases" />
+                                                               </tooltip>
+                                                            </TextField>
+                                                            <Label text=" / 100">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                            </Label>
+
+                                                      </HBox>
+
+                                                   <padding>
+                                                      <Insets left="14.0" />
+                                                   </padding>
+                                                </VBox>
+                                                <VBox alignment="CENTER_LEFT" prefWidth="250.0">
+
+                                                      <HBox prefWidth="200.0" spacing="10.0">
+
+                                                            <Label text="Sum">
+                                                               <HBox.margin>
+                                                                  <Insets top="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <TextField fx:id="tf_GradeProportions_Sum_Uneditable" editable="false" prefHeight="25.0" prefWidth="96.0" text="0">
+                                                               <font>
+                                                                  <Font name="Consolas" size="12.0" />
+                                                               </font>
+                                                               <tooltip>
+                                                                  <Tooltip text="The sum of the three grade proportions. This must equal 100." />
+                                                               </tooltip>
+                                                            </TextField>
+
+                                                      </HBox>
+
+                                                </VBox>
+
+                                          </HBox>
+
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+
+                                        <Button fx:id="btn_Scripts_GenerateAndFinish" defaultButton="true" mnemonicParsing="false" onMousePressed="#printSciptData" onMouseReleased="#generateScriptFiles" prefHeight="36.0" prefWidth="144.0" text="Generate &amp; Finish" />
+
+                                    </HBox>
+
+                              </VBox>
+
+                        </AnchorPane>
+
+                  </Tab>
+                  <Tab text="About">
+
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                              <VBox alignment="CENTER" layoutX="215.0" layoutY="84.0" prefWidth="720.0" spacing="32.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="64.0" left="128.0" right="128.0" top="64.0" />
+                                 </padding>
+
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@NUIMLogo.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label text="This program was created by Syed Baryalay and Michael O'Neill as part of the Maynooth University Summer Programme for Undergraduate Research (SPUR 2021) under the mentorship of Dr Aidan Mooney, Amy Thompson, and Mark Noone." textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                                    <VBox alignment="CENTER" prefWidth="100.0">
+
+                                          <Label text="Find the source code at our online repository:" wrapText="true" />
+                                          <Hyperlink fx:id="link_About_Repo" onAction="#openRepository" text="https://github.com/MuleCodeLab/CodeLab" />
+
+                                    </VBox>
+
+                              </VBox>
+
+                        </AnchorPane>
+
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </AnchorPane>
+
+</ScrollPane>
