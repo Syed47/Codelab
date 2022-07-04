@@ -19,7 +19,7 @@ declare -a Comment1=("for loop out" )
 numberOfRegex=\${#RegexList1[*]}
 compileGrade=20
 regexGrade=20
-numberOfTestCases=2
+numberOfTestCases=3
 testCasesGrade=60
 regex=regexGrade/numberOfRegex
 testCase=testCasesGrade/numberOfTestCases
@@ -72,6 +72,9 @@ EOF
 cat > data2.txt <<EOF
 word
 EOF
+cat > data3.txt <<EOF
+sleep
+EOF
 
 
 #--- create expected outputs, one for each input file above ---
@@ -79,23 +82,26 @@ cat > data1.out <<EOF
 JOE
 Joe
 3
-j
-o
-e
+j\no\ne
 EOF
 cat > data2.out <<EOF
 WORD
 Word
 4
-w
-o
-r
-d
+W\nO\nR\nD
 EOF
-declare -a ans1=('JOE')
+cat > data3.out <<EOF
+SLEEP
+Sleep
+5
+[sS]\n[lL]\n[eE]\n[eE]\n[pP]
+EOF
+declare -a ans1=('JOE' 'Joe' '3' 'j\no\ne')
 len1=\${#ans1[*]}
-declare -a ans2=('WORD')
+declare -a ans2=('WORD' 'Word' '4' 'W\nO\nR\nD')
 len2=\${#ans2[*]}
+declare -a ans3=('SLEEP' 'Sleep' '5' '[sS]\n[lL]\n[eE]\n[eE]\n[pP]')
+len3=\${#ans3[*]}
 
 
 count=0
