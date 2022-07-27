@@ -9,9 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -32,6 +28,10 @@ import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -79,9 +79,23 @@ public class Controller {
         tabs.getSelectionModel().select(2);
     }
 
-    public void loadHTMLDefault() {
+    public void loadJSONDefault() {
         vb_HiddenQuestionData.setVisible(false);
         btn_JSON_Generate.setLayoutY(-350);
+
+
+        tf_AccessStart_hour.setText((jsonStorage.labData.accessStartHour = "00"));
+        tf_AccessStart_minute.setText((jsonStorage.labData.accessStartMinute = "00"));
+        tf_AccessEnd_hour.setText((jsonStorage.labData.accessEndHour = "00"));
+        tf_AccessEnd_minute.setText((jsonStorage.labData.accessEndMinute = "00"));
+        tf_CaEvalStart_hour.setText((jsonStorage.labData.caEvalStartHour = "00"));
+        tf_CaEvalStart_minute.setText((jsonStorage.labData.caEvalStartMinute = "00"));
+        tf_CaEvalEnd_hour.setText((jsonStorage.labData.caEvalEndHour = "00"));
+        tf_CaEvalEnd_minute.setText((jsonStorage.labData.caEvalEndMinute = "00"));
+
+        jsonStorage.courseData.title = "CS161";
+        jsonStorage.questionData.course = "CS161";
+        tf_CourseName.setText("CS161");
     }
 
     public void setCourseName(KeyEvent e) {
@@ -505,6 +519,7 @@ public class Controller {
         selectTestingMethodDefault();
         selectLanguageDefault();
         titledpane_CodeFileOptions_SetAsMain.setExpanded(true);
+        chbox_casesensitive.setSelected(true);
     }
 
     public void selectLanguageDefault() {
@@ -820,6 +835,7 @@ public class Controller {
             String missingValues = fileProducer.json();
             if (missingValues == null) {
                 Widget.OK("Success!", "JSON files created successfully.");
+                tabs.getSelectionModel().select(1);
             } else {
                 Widget.ERROR("Failure!", missingValues);
 //                Widget.ERROR("Failure!","Please provide all required information.");
@@ -834,6 +850,7 @@ public class Controller {
             String missingValues = fileProducer.html();
             if (missingValues == null) {
                 Widget.OK("Success!", "HTML files created successfully.");
+                tabs.getSelectionModel().select(2);
             } else {
                 Widget.ERROR("Failure!", missingValues);
             }

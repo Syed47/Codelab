@@ -3,16 +3,17 @@ package app.storage;
 import app.ui.Widget;
 import com.syed.core.io;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ExecutionException;
 
 public class LabLevelJSONDataStorage {
 
 	public String labNumber = "0";
     public String label = "Lab";
-	public String accessStartDate, accessStartHour, accessStartMinute;
-    public String accessEndDate, accessEndHour, accessEndMinute;
-    public String caEvalStartDate, caEvalStartHour, caEvalStartMinute;
-    public String caEvalEndDate, caEvalEndHour, caEvalEndMinute;
+	public String accessStartDate, accessStartHour = "00", accessStartMinute = "00";
+    public String accessEndDate, accessEndHour = "00", accessEndMinute = "00";
+    public String caEvalStartDate, caEvalStartHour = "00", caEvalStartMinute = "00";
+    public String caEvalEndDate, caEvalEndHour = "00", caEvalEndMinute = "00";
     public String pgStartDate, pgStartHour, pgStartMinute;
     public String pgEndDate, pgEndHour, pgEndMinute;
 
@@ -32,8 +33,8 @@ public class LabLevelJSONDataStorage {
         int day = Integer.parseInt(ddmmyyyy[0]);
         int month = Integer.parseInt(ddmmyyyy[1]);
         int year = Integer.parseInt(ddmmyyyy[2]);
-        int hour = Integer.parseInt(accessStartHour == null ? "0" : accessStartHour);
-        int minute = Integer.parseInt(accessStartMinute == null ? "0" : accessStartMinute);
+        int hour = Integer.parseInt(accessStartHour == null ? "09" : accessStartHour);
+        int minute = Integer.parseInt(accessStartMinute == null ? "00" : accessStartMinute);
 
         return LocalDateTime.of(year, month, day, hour, minute);
     }
@@ -128,6 +129,10 @@ public class LabLevelJSONDataStorage {
             missing = "CA start time not specified";
         } else if (getCAEvalEnd() == null) {
             missing = "CA end time not specified";
+        } else if (ChronoUnit.MINUTES.between(getAccessStart(), getAccessEnd()) <= 0) { // 0 minutes difference
+            missing = "Access start must be before access end.\nPlease correct the date/time";
+        } else if (ChronoUnit.MINUTES.between(getCAEvalStart(), getCAEvalEnd()) <= 0) { // 0 minutes difference
+            missing = "CA start must be before access end.\nPlease correct the date/time";
         }
         io.DEBUG(missing);
         return missing;

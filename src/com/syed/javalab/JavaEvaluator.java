@@ -34,9 +34,9 @@ public class JavaEvaluator extends CodeEvaluator {
         script.append("compiled=true\n");
 
         script.append(String.format("prog1=%s\n", io.fileTitle(this.mainfile())));
-        for (int i = 1; i < N; i++) {
-            if (!titles[i].equals(this.mainfile())) {
-                script.append(String.format("prog%d=%s\n", index, titles[i]));
+        for (String value : titles) {
+            if (!value.equals(this.mainfile())) {
+                script.append(String.format("prog%d=%s\n", index, value));
                 index++;
             }
         }
@@ -58,15 +58,15 @@ public class JavaEvaluator extends CodeEvaluator {
         script.append(")\n");
 
         index = 2;
-        for (int i = 1; i < N; i++) {
-            if (!titles[i].equals(this.mainfile())) {
+        for (String s : titles) {
+            if (!s.equals(this.mainfile())) {
                 script.append(String.format("declare -a RegexList%d=(", index));
-                for (Regex regex : this.getRegex().get(titles[i])) {
+                for (Regex regex : this.getRegex().get(s)) {
                     script.append("\"").append(regex.use()).append("\" ");
                 }
                 script.append(")\n");
                 script.append(String.format("declare -a Comment%d=(", index));
-                for (Regex regex : this.getRegex().get(titles[i])) {
+                for (Regex regex : this.getRegex().get(s)) {
                     script.append("\"").append(regex.getComment()).append("\" ");
                 }
                 script.append(")\n");
@@ -90,7 +90,7 @@ public class JavaEvaluator extends CodeEvaluator {
         script.append("regex=regexGrade/numberOfRegex\n");
         script.append("testCase=testCasesGrade/numberOfTestCases\n");
 
-        script.append("\n# ----------------- COMPILE STUDENT PROG  ----------------\n");
+        script.append("\n# ----------------- COMPILE STUDENT PROGRAM  ----------------\n");
         script.append(compiler).append(" ");
         for (String title : titles) {
             script.append(String.format("%s%s ", title, extension));
@@ -196,7 +196,7 @@ public class JavaEvaluator extends CodeEvaluator {
         switch(test) {
             case NON_EXACT, NON_EXACT_CASE_SENSITIVE -> {
                 script.append("\n");
-                script.append(formatAnswersFor(test));
+                script.append(formattedAnswersFor(test));
                 script.append("\n");
                 script.append("count=0\n");
                 script.append("if [ \\${compiled} = true ] ; then\n");
@@ -300,7 +300,7 @@ public class JavaEvaluator extends CodeEvaluator {
         }
     }
 
-    private String formatAnswersFor(Test test) {
+    private String formattedAnswersFor(Test test) {
         StringBuilder script = new StringBuilder();
         switch (test) {
             case NON_EXACT, NON_EXACT_CASE_SENSITIVE -> {
@@ -319,22 +319,8 @@ public class JavaEvaluator extends CodeEvaluator {
                 return script.toString();
             }
 
-            default -> { // ADVANCE
+            default -> {
                 return "";
-//                for (int i = 0; i < this.getTests().size(); i++) {
-//                    script.append(String.format("declare -a ans%d=(", i + 1));
-//                    String[] regex = this.getTests().get(i).getOutput().split("\n");
-//
-//                    for (String line : regex) {
-//                        // i might not need to do the replace
-//                        script.append("'").append(line.replaceAll("\\+", "abc")).append("' ");
-//                    }
-//                    if (!(regex == null || regex.length == 0)) {
-//                        script.deleteCharAt(script.length()-1); // removing extra space
-//                    }
-//                    script.append(")\n");
-//                    script.append(String.format("len%d=\\${#ans%d[*]}\n", i + 1, i + 1));
-//                }
             }
         }
 
