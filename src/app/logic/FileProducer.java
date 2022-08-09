@@ -26,7 +26,7 @@ public class FileProducer {
     private final String location;
 
     public FileProducer(JSONDataStorage jds, HTMLDataStorage htmlds, ScriptsDataStorage sds) throws IOException {
-        this("Courses", jds, htmlds, sds);
+        this("CodeLab Courses", jds, htmlds, sds);
     }
 
     private FileProducer(String folderName, JSONDataStorage jds, HTMLDataStorage htmlds, ScriptsDataStorage sds) throws IOException {

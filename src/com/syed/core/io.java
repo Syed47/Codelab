@@ -157,7 +157,10 @@ public class io {
         try {
             Path path = Path.of(location);
             if (Files.notExists(path)) {
+                io.DEBUG("Does not exit --------------");
                 Files.createDirectory(path);
+                io.DEBUG("Created --------------");
+
             }
             return path.toString();
         } catch(IOException e) {

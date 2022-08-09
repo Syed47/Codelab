@@ -61,16 +61,11 @@
                                        <Font size="15.0" />
                                     </font>
                                  </Button>
-                                 <Hyperlink fx:id="linkGuide1" layoutX="39.0" layoutY="487.0" prefHeight="27.0" prefWidth="122.0" text="How To Guide" underline="true">
-                                    <font>
-                                       <Font size="15.0" />
-                                    </font>
-                                 </Hyperlink>
                                  <ImageView fitWidth="200.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="40.0">
                                     <image>
                                        <Image url="@/app/ui/assets/logo.png" />
                                     </image></ImageView>
-                                 <Hyperlink layoutX="49.0" layoutY="448.0" text="About Page " underline="true">
+                                 <Hyperlink onAction="#openRepository" layoutX="70.0" layoutY="448.0" text="About">
                                     <font>
                                        <Font size="15.0" />
                                     </font>
@@ -587,17 +582,12 @@
                                     <font>
                                        <Font size="15.0" />
                                     </font></Button>
-                                 <Hyperlink fx:id="linkGuide2" layoutX="50.0" layoutY="483.0" prefHeight="27.0" prefWidth="121.0" text="How To Guide" underline="true">
-                                    <font>
-                                       <Font size="15.0" />
-                                    </font>
-                                 </Hyperlink>
                                  <ImageView fitHeight="213.0" fitWidth="200.0" layoutX="10.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="40.0">
                                     <image>
                                        <Image url="@/app/ui/assets/logo.png" />
                                     </image>
                                  </ImageView>
-                                 <Hyperlink layoutX="60.0" layoutY="447.0" text="About Page " underline="true">
+                                 <Hyperlink onAction="#openRepository" layoutX="60.0" layoutY="447.0" text="About">
                                     <font>
                                        <Font size="15.0" />
                                     </font>
@@ -806,17 +796,12 @@
                                     <font>
                                        <Font size="15.0" />
                                     </font></Button>
-                                 <Hyperlink fx:id="linkGuide3" layoutX="46.0" layoutY="483.0" prefHeight="27.0" prefWidth="119.0" text="How To Guide" underline="true">
-                                    <font>
-                                       <Font size="15.0" />
-                                    </font>
-                                 </Hyperlink>
                                  <ImageView fitHeight="213.0" fitWidth="200.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="40.0">
                                     <image>
                                        <Image url="@/app/ui/assets/logo.png" />
                                     </image>
                                  </ImageView>
-                                 <Hyperlink layoutX="55.0" layoutY="450.0" text="About Page " underline="true">
+                                 <Hyperlink onAction="#openRepository" layoutX="55.0" layoutY="450.0" text="About">
                                     <font>
                                        <Font size="15.0" />
                                     </font>

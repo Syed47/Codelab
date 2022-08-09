@@ -28,10 +28,6 @@ import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,9 +89,24 @@ public class Controller {
         tf_CaEvalEnd_hour.setText((jsonStorage.labData.caEvalEndHour = "00"));
         tf_CaEvalEnd_minute.setText((jsonStorage.labData.caEvalEndMinute = "00"));
 
-        jsonStorage.courseData.title = "CS161";
-        jsonStorage.questionData.course = "CS161";
-        tf_CourseName.setText("CS161");
+        String courseName = "CS161";
+        jsonStorage.courseData.title = courseName;
+        jsonStorage.questionData.course = courseName;
+        tf_CourseName.setText(courseName);
+
+
+        tf_Hidden_PgStart_hour.setText((jsonStorage.labData.pgStartHour = "00"));
+        tf_Hidden_PgStart_minute.setText((jsonStorage.labData.pgStartMinute = "00"));
+
+        tf_Hidden_PgEnd_hour.setText((jsonStorage.labData.pgEndHour = "00"));
+        tf_Hidden_PgEnd_minute.setText((jsonStorage.labData.pgEndMinute = "00"));
+
+        tf_Hidden_LabSessions_minute.setText((jsonStorage.questionData.startHour = "00"));
+        tf_Hidden_LabSessions_hour.setText((jsonStorage.questionData.startMinute = "00"));
+
+
+        tf_Hidden_LabSessionLength_hours.setText((jsonStorage.questionData.lengthHour = "03"));
+        tf_Hidden_LabSessionLength_minutes.setText((jsonStorage.questionData.lengthMinute = "00"));
     }
 
     public void setCourseName(KeyEvent e) {
@@ -834,7 +845,7 @@ public class Controller {
         try {
             String missingValues = fileProducer.json();
             if (missingValues == null) {
-                Widget.OK("Success!", "JSON files created successfully.");
+                Widget.OK("JSON files created", "Path: " + fileProducer.getCourseLevelPath());
                 tabs.getSelectionModel().select(1);
             } else {
                 Widget.ERROR("Failure!", missingValues);
@@ -849,7 +860,7 @@ public class Controller {
         try {
             String missingValues = fileProducer.html();
             if (missingValues == null) {
-                Widget.OK("Success!", "HTML files created successfully.");
+                Widget.OK("HTML files created", "Path: " + fileProducer.getQuestionLevelPath());
                 tabs.getSelectionModel().select(2);
             } else {
                 Widget.ERROR("Failure!", missingValues);
@@ -863,7 +874,7 @@ public class Controller {
         try {
             String missingValues = fileProducer.scripts();
             if (missingValues == null) {
-                Widget.OK("Success!", "Script files created successfully");
+                Widget.OK("Script files created", "Path: " + fileProducer.getQuestionLevelPath());
                 io.DEBUG("OK");
             } else {
                 Widget.ERROR("Failure!", missingValues);
@@ -877,12 +888,15 @@ public class Controller {
     }
 
     public void openRepository(ActionEvent e) {
+        accessURL("https://www.github.com/MuleCodeLab/CodeLab/");
+    }
+
+    public void accessURL(String url) {
         try {
-            Desktop desktop = Desktop.getDesktop();
-            URI url = new URI("https://www.github.com/MuleCodeLab/CodeLab/");
-            desktop.browse(url);
+            Desktop.getDesktop().browse(new URI(url));
+            io.DEBUG("out");
         } catch (Exception ex) {
-            Widget.ERROR("Unexpected Error!", ex.getMessage());
+            Widget.ERROR("Error!", ex.getMessage());
         }
     }
     
